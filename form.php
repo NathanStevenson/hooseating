@@ -1,7 +1,27 @@
 <?php 
   require("connect-db.php");
+  require("login.php");
+
+  $authAttempt = 0;
+  if($_SERVER['REQUEST_METHOD']=='POST'){
+    if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="LOGIN"){
+      $auth = checkLogin($_POST['name'], $_POST['password']);
+      $authAttempt = 1;
+      if($authAttempt){
+        if($auth){
+          //TODO: redirect
+          echo "CORRECT USERNAME AND PASSWORD";
+        }else{
+          echo "INCORRECT USERNAME OR PASSWORD";
+        }
+      }
+
+    }
+  }
+
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +52,7 @@
   </div>  
   <div class="row mb-3 mx-3">
     Password:
-    <input type="password" class="form-control" name="major" required 
+    <input type="password" class="form-control" name="password" required 
     />        
   </div>  
 
