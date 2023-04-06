@@ -1,7 +1,7 @@
 <?php 
   require("connect-db.php");
   require("login.php");
-
+  require("register.php");
   $authAttempt = 0;
   if($_SERVER['REQUEST_METHOD']=='POST'){
     if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="LOGIN"){
@@ -18,6 +18,17 @@
 
     }
   }
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST'){// && $_POST['actionbtn']=="REGISTER"){
+    global $db; 
+    $username = $_POST['name'];
+    $res = checkifuserexist($username);
+    debug_to_console($res);
+    if ($res){
+        debug_to_console("USERNAME EXISTS!!!!@!");
+    }
+  }
+
 
 
 ?>
