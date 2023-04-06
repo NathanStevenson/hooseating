@@ -52,7 +52,7 @@
   </div>  
   <div class="row mb-3 mx-3">
     Password:
-    <input type="password" class="form-control" name="password" required 
+    <input type="text" class="form-control" name="password" required 
     />        
   </div>  
 
