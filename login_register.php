@@ -14,7 +14,7 @@
     // Function that checks if the users username and password are valid upon sign in
     function checkLogin($username, $password){
         global $db;
-        $query = "select * from User where name=:name and password=PASSWORD(:password)";
+        $query = "SELECT * FROM User WHERE name=:name AND password=PASSWORD(:password)";
         $statement = $db->prepare($query);
         $statement->bindValue(':name', $username);
         $statement->bindValue(':password', $password);
@@ -27,7 +27,7 @@
     // Function that registers a user in our database on login
     function add_user($id, $uname, $pwd){
         global $db;
-        $query = "INSERT INTO User VALUES (:id, :uname, NULL, :pwd);";
+        $query = "INSERT INTO User VALUES (:id, :uname, NULL, PASSWORD(:pwd));";
         $statement = $db->prepare($query);
         // bind the templates if not an executable
         $statement->bindValue(':id', $id);
@@ -40,7 +40,7 @@
     // Finds the first available user_id
     function max_user_id(){
         global $db;
-        $query = "SELECT max(user_id) FROM User";
+        $query = "SELECT MAX(user_id) FROM User";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchColumn();
