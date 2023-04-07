@@ -1,3 +1,5 @@
+<!-- TO TEST LOCALLY http://www.cs.virginia.edu/~your-computingID/path-to-your-file/helloworld.html (do not include public_html)-->
+
 <?php
 /** S23, PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on CS server) **/
 $username = 'nts7bcj'; 
@@ -14,7 +16,6 @@ try
    $db = new PDO($dsn, $username, $password);
    
    // dispaly a message to let us know that we are connected to the database 
-   echo "<p>You are connected to the database: $dsn</p>";
 }
 catch (PDOException $e)     // handle a PDO exception (errors thrown by the PDO library)
 {
