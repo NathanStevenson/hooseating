@@ -17,8 +17,9 @@
             if($authAttempt){
                 // If the user is authenticated
                 if($auth){
-                    // Redirect the user to the main page
                     $wrong_credential_msg = "";
+                    // Redirect the user to the main page
+                    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
                 // User entered the wrong info
                 }else{
                     $wrong_credential_msg = "Invalid Credentials!";
@@ -38,6 +39,7 @@
                 $userid = max_user_id() + 1;
                 add_user($userid, $_POST['name'], $_POST['password']);
                 // Redirect the user to the main page
+                header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
             }
         }
     }
