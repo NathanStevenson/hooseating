@@ -5,7 +5,7 @@
 $username = 'nts7bcj'; 
 $password = '4750Databases';
 $host = 'mysql01.cs.virginia.edu';
-$dbname = 'nts7bcj_b';
+$dbname = 'nts7bcj_d';
 $dsn = "mysql:host=$host;dbname=$dbname";
 ////////////////////////////////////////////
 

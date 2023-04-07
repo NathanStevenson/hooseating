@@ -17,7 +17,7 @@
             if($authAttempt){
                 // If the user is authenticated
                 if($auth){
-                    // Redirect the User into the main page
+                    // Redirect the user to the main page
                     $wrong_credential_msg = "";
                 // User entered the wrong info
                 }else{
@@ -34,6 +34,10 @@
             //  otherwise clear that msg to the user
             }else{
                 $username_exists_msg = "";
+                // Code that assigns each user a new unique ID
+                $userid = max_user_id() + 1;
+                add_user($userid, $_POST['name'], $_POST['password']);
+                // Redirect the user to the main page
             }
         }
     }
