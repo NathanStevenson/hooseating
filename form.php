@@ -18,8 +18,11 @@
                 // If the user is authenticated
                 if($auth){
                     $wrong_credential_msg = "";
+                    $active_user = username_taken($_POST['name']);
+                    debug_to_console($active_user['name']);
                     // Redirect the user to the main page
-                    header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/");
+                    // change the redirect location for local testing with your computing ID
+                    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
                 // User entered the wrong info
                 }else{
                     $wrong_credential_msg = "Invalid Credentials!";
@@ -33,13 +36,18 @@
             if ($res){
                 $username_exists_msg = "That username already exists!";
             //  otherwise clear that msg to the user
-            }else{
+            }
+            elseif(strlen($_POST['name']) > 30){
+                $username_exists_msg = "Username is too long (max: 30)!";
+            }
+            else{
                 $username_exists_msg = "";
                 // Code that assigns each user a new unique ID
                 $userid = max_user_id() + 1;
                 add_user($userid, $_POST['name'], $_POST['password']);
+                $active_user = username_taken($_POST['name']);
                 // Redirect the user to the main page
-                header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/");
+                header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
             }
         }
     }

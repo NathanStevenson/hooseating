@@ -6,7 +6,7 @@
         $statement = $db->prepare($query);
         $statement->bindValue(':username', $username);
         $statement->execute();
-        $results = $statement->fetchAll();
+        $results = $statement->fetch();
         $statement->closeCursor();
         return $results;
     }
@@ -46,5 +46,11 @@
         $results = $statement->fetchColumn();
         $statement->closeCursor();
         return $results;
+    }
+
+    // given a user allows the BLOB to become an image
+    function blob_to_img($image_data){
+        $mime_type = mime_content_type($image_data);
+        header("Content-Type: $mime_type");
     }
 ?>
