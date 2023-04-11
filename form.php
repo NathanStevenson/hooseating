@@ -1,4 +1,7 @@
 <?php
+
+    // THIS GOES AT THE TOP OF EACH PHP WEB PAGE SUPERGLOBAL AREA: $_SESSION is created
+    session_start();
 	// Require code for other files needed for the user login form
 	// Code that connects the database
 	require("connect-db.php");
@@ -17,9 +20,10 @@
             if($authAttempt){
                 // If the user is authenticated
                 if($auth){
+                    // Stores user in the session variable
+                    $_SESSION['username'] = $_POST['name']; 
+                    // Updates the error message 
                     $wrong_credential_msg = "";
-                    $active_user = username_taken($_POST['name']);
-                    debug_to_console($active_user['name']);
                     // Redirect the user to the main page
                     // change the redirect location for local testing with your computing ID
                     header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
@@ -41,6 +45,9 @@
                 $username_exists_msg = "Username is too long (max: 30)!";
             }
             else{
+                // Stores user in the session variable
+                $_SESSION[$res['name']] = $res['name'];
+
                 $username_exists_msg = "";
                 // Code that assigns each user a new unique ID
                 $userid = max_user_id() + 1;

@@ -1,4 +1,17 @@
-<?php 
+<?php
+
+    // TOP OF EVERY PAGE WITH HTML
+    session_start();
+
+    $active_user = "";
+    // if the user is not logged in then redirect them to the login_page
+    if (!isset($_SESSION['username'])) {
+        // redirect the user to the login page
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+    }else{
+        $active_user = $_SESSION['username'];
+    }
+
     require("connect-db.php");
     require("utilities.php");
     require("main_page_proc.php");
@@ -46,6 +59,29 @@
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
         </nav>
+
+        <!-- DropDown button to filter the restaurants by -->
+        <button onclick="toggleOptions()" class="ms-5 mt-2 btn btn-secondary">Sort By:</button>
+        <div id="sortby" style="display: none;" >
+            <ul style="position: absolute;">
+                <a>Best Restaurants</a>
+                <a>Worst Restaurants</a>
+                <a>Alphabetically</a>
+            </ul>
+        </div>
+
+        <script>
+        // Script to Toggle Dropdown button 
+        function toggleOptions() {
+        var options = document.getElementById("sortby");
+            if (options.style.display === "none") {
+                options.style.display = "block";
+            } else {
+                options.style.display = "none";
+            }
+        }
+        </script>
+
 
         <?php
         // Counter variable to keep track of the number of elements printed
