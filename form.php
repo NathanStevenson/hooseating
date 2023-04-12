@@ -88,8 +88,8 @@
                     <input type="password" class="form-control" name="password" required />        
                 </div>  
                 <div class="mt-5 pb-4 mx-auto w-75 d-flex justify-content-evenly">
-                    <input type="submit" class="btn btn-primary" value="LOGIN" name="actionBtn" title="submit">
-                    <input type="submit" class="btn btn-primary" value="REGISTER" name="actionBtn" title="submit">
+                    <input type="submit" class="btn btn-primary" value="LOGIN" name="actionBtn" title="Login">
+                    <input type="submit" class="btn btn-primary" value="REGISTER" name="actionBtn" title="Register">
                 </div>
 
                 <p class="text-center fw-bold pb-3" style="color:red">
