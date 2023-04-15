@@ -1,5 +1,9 @@
 <?php
 
+    require("connect-db.php");
+    require("utilities.php");
+    require("main_page_proc.php");
+
     // TOP OF EVERY PAGE WITH HTML
     session_start();
 
@@ -12,25 +16,60 @@
         $active_user = $_SESSION['username'];
     }
 
-    require("connect-db.php");
-    require("utilities.php");
-    require("main_page_proc.php");
+    // Two Session variables (global) one that holds the sort by type and the other details the restaurants (default all rests with best ratings)
+    // Checking if the Session Variables are not set and if they are not then giving them default values (otherwise just use the ones it is set as)
+    if(!isset($_SESSION['filter_type'])){
+        $_SESSION['filter_type'] = "best";
+    }
+
+    if(!isset($_SESSION['restaurants'])){
+        $_SESSION['restaurants'] = "all";
+    }
 
     // By default the restaurants are displayed listing the best rated restaurants first
-    $top_rated_rests = top_rated_restaurants();
+    $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
 
+    // If any form is submitted this code is run
     if($_SERVER['REQUEST_METHOD']=='POST'){
         // sort by the best restaurants
         if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Best Restaurants"){
-            $top_rated_rests = top_rated_restaurants();
+            $_SESSION['filter_type'] = "best";
+            $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
         }
         // sort by the worst restaurants
         if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Worst Restaurants"){
-            $top_rated_rests = worst_rated_restaurants();
+            $_SESSION['filter_type'] = "worst";
+            $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
         }
         // sort restaurants alphabetically
         if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Alphabetically"){
-            $top_rated_rests = alphabetically();
+            $_SESSION['filter_type'] = "alphabetically";
+            $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
+        }
+
+        // logic for displaying certain types of restaurants
+        // All
+        if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="All Restaurants"){
+            $_SESSION['restaurants'] = "all";
+            $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
+        }
+
+        // Bars
+        if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Bars"){
+            $_SESSION['restaurants'] = "bars";
+            $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
+        }
+
+        // Dine-In
+        if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Dine-In"){
+            $_SESSION['restaurants'] = "dine-in";
+            $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
+        }
+
+        // Fast Food
+        if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Fast Food"){
+            $_SESSION['restaurants'] = "fast-food";
+            $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
         }
     }
 ?>
@@ -87,20 +126,33 @@
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
         </nav>
 
-        <!-- DropDown button to filter the restaurants by -->
-        <button onclick="toggleOptions()" class="ms-5 mt-2 btn btn-secondary">Sort By:</button>
-        <div id="sortby" style="display: none;" >
-            <form class="px-3 py-1" name="sortbyform" action="main_page.php" method="post" style="position: absolute; cursor: pointer;" id="sortbydropdown">
-                <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-top" value="Best Restaurants" name="actionBtn">
-                <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold" value="Worst Restaurants" name="actionBtn">
-                <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-bottom" value="Alphabetically" name="actionBtn">
-            </form>
+        <div class="d-md-inline-flex">
+            <!-- Allows users to select which restaurants they are looking at reviews for -->
+            <button onclick="toggleOptions('rest_type')" class="ms-5 mt-4 btn btn-secondary"><?php echo session_restaurant_str($_SESSION['restaurants']); ?></button>
+            <div id="rest_type" style="display: none;" >
+                <form class="px-3 py-1" name="sortbyform" action="main_page.php" method="post" style="position: absolute; cursor: pointer;" id="sortbydropdown">
+                    <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-top" value="All Restaurants" name="actionBtn">
+                    <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold" value="Bars" name="actionBtn">
+                    <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-bottom" value="Dine-In" name="actionBtn">
+                    <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-bottom" value="Fast Food" name="actionBtn">
+                </form>
+            </div>
+
+            <!-- DropDown button to filter the restaurants by -->
+            <button onclick="toggleOptions('sortby')" class="ms-5 mt-4 btn btn-secondary"><?php echo session_filter_str($_SESSION['filter_type']); ?></button>
+            <div id="sortby" style="display: none;" >
+                <form class="px-3 py-1" name="sortbyform" action="main_page.php" method="post" style="position: absolute; cursor: pointer;" id="sortbydropdown">
+                    <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-top" value="Best Restaurants" name="actionBtn">
+                    <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold" value="Worst Restaurants" name="actionBtn">
+                    <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-bottom" value="Alphabetically" name="actionBtn">
+                </form>
+            </div>
         </div>
 
         <script>
         // Script to Toggle Dropdown button 
-        function toggleOptions() {
-        var options = document.getElementById("sortby");
+        function toggleOptions(dropdown) {
+        var options = document.getElementById(dropdown);
             if (options.style.display === "none") {
                 options.style.display = "block";
             } else {
