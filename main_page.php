@@ -16,7 +16,23 @@
     require("utilities.php");
     require("main_page_proc.php");
 
+    // By default the restaurants are displayed listing the best rated restaurants first
     $top_rated_rests = top_rated_restaurants();
+
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+        // sort by the best restaurants
+        if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Best Restaurants"){
+            $top_rated_rests = top_rated_restaurants();
+        }
+        // sort by the worst restaurants
+        if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Worst Restaurants"){
+            $top_rated_rests = worst_rated_restaurants();
+        }
+        // sort restaurants alphabetically
+        if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="Alphabetically"){
+            $top_rated_rests = alphabetically();
+        }
+    }
 ?>
 
 
@@ -51,6 +67,17 @@
             color: navy;
             text-decoration: underline;
         }
+
+        #sortbydropdown input{
+            color: white;
+            background-color: lightgray;
+            width: 100%;
+        }
+
+        #sortbydropdown input:hover{
+            color: navy;
+        }
+
         </style>
     </head>
     <body>
@@ -63,11 +90,11 @@
         <!-- DropDown button to filter the restaurants by -->
         <button onclick="toggleOptions()" class="ms-5 mt-2 btn btn-secondary">Sort By:</button>
         <div id="sortby" style="display: none;" >
-            <ul style="position: absolute;">
-                <a>Best Restaurants</a>
-                <a>Worst Restaurants</a>
-                <a>Alphabetically</a>
-            </ul>
+            <form class="px-3 py-1" name="sortbyform" action="main_page.php" method="post" style="position: absolute; cursor: pointer;" id="sortbydropdown">
+                <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-top" value="Best Restaurants" name="actionBtn">
+                <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold" value="Worst Restaurants" name="actionBtn">
+                <input type="submit" class="d-block border border-secondary text-center p-2 fw-bold rounded-bottom" value="Alphabetically" name="actionBtn">
+            </form>
         </div>
 
         <script>
