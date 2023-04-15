@@ -68,6 +68,10 @@
             text-decoration: underline;
         }
 
+        nav a.prof{
+            float:right;
+        }
+        
         #sortbydropdown input{
             color: white;
             background-color: lightgray;
@@ -85,6 +89,7 @@
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
         </nav>
 
         <!-- DropDown button to filter the restaurants by -->
