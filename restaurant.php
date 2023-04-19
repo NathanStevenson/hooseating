@@ -203,7 +203,7 @@ $statement->closeCursor();
         $numberoflikes = 0;
         $time = time();
 
-        $query = "INSERT INTO review VALUES (:rating_id, :user_id, :restaurant_id, :number_of_likes, :summary, :rating, :time_published);";
+        $query = "INSERT INTO Review VALUES (:rating_id, :user_id, :restaurant_id, :number_of_likes, :summary, :rating, :time_published);";
         $statement = $db->prepare($query);
         $statement->bindValue(':rating_id', $rating_id);
         $statement->bindValue(':user_id', $user_id);
