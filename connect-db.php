@@ -7,6 +7,14 @@ $password = '4750Databases';
 $host = 'mysql01.cs.virginia.edu';
 $dbname = 'nts7bcj_d';
 $dsn = "mysql:host=$host;dbname=$dbname";
+
+// for gabe to develop; must be commented out before pushing to production! 
+$username = 'Gabriel'; 
+$password = 'Gabriel123';
+$host = 'localhost:3306';
+$dbname = 'project';
+$dsn = "mysql:host=$host;dbname=$dbname";
+
 ////////////////////////////////////////////
 
 /** connect to the database **/
