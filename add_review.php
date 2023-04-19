@@ -6,7 +6,7 @@
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
         // header("Location: form.php/");
     }else{
         $active_user = $_SESSION['username'];
@@ -120,7 +120,7 @@
 
     // add button
     if(isset($_POST['radd'])){
-        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/add_restaurant.php");
+        header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/add_restaurant.php");
         // header("Location: add_restaurant.php/"); // doesn't work when current URL ends in /
     }
 
@@ -140,7 +140,7 @@
                 $name = $val['name'];
                 $id = $val['restaurant_id'];
                 // echo "<div> <h3><a class='button' href='restaurant.php?id=$id'>$name</a></h3> </div>";
-                echo "<div> <h3><a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/add_restaurant.php?id=$id'>$name</a></h3> </div>";
+                echo "<div> <h3><a class='button' href='https://www.cs.virginia.edu/~ffk9uu/hooseating/add_restaurant.php?id=$id'>$name</a></h3> </div>";
                      
             }    
         }
