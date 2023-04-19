@@ -3,11 +3,12 @@
     // TOP OF EVERY PAGE WITH HTML
     session_start();
 
+    $redirect = "nts7bcj";
     $active_user = "";
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~" . $redirect . "/hooseating/form.php/");
         //header("Location: form.php/");
     }else{
         $active_user = $_SESSION['username'];
@@ -113,10 +114,10 @@
     </head>
     <body>
         <nav>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
         </nav>
 
         <div>
@@ -124,7 +125,7 @@
                 <!-- //placeholder image -->
                 <img src="../images/default.png" alt="Profile Picture">
                 <figcaption><h1><?php echo $_SESSION['username']; ?></h1></figcaption>
-                <figcaption>uesr summary</figcaption>
+                <figcaption>User Summary</figcaption>
             </figure>
         </div>
 
