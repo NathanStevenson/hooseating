@@ -121,7 +121,7 @@
     <select class="form-control" id="cuisine" name="cuisine">
       <?php
         // PHP code to retrieve options from SQL table and populate dropdown list
-        $query = "SELECT DISTINCT cuisine FROM Restaurant";
+        $query = "SELECT DISTINCT Cuisine FROM Restaurant";
         $statement = $db->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_COLUMN);
