@@ -20,7 +20,7 @@ require("profile_page_db.php");
 
 // getting current restaurant into $restaurant
 $id = $_GET['id'];
-$query = "SELECT * FROM restaurant where restaurant_id=:id;";
+$query = "SELECT * FROM Restaurant where restaurant_id=:id;";
 $statement = $db->prepare($query);
 $statement->bindValue(':id',$id);
 $statement->execute();
@@ -28,7 +28,7 @@ $restaurant = $statement->fetch();
 $statement->closeCursor();
 
 // getting 50 most recent reviews into $reviews
-$query = "SELECT * FROM review WHERE restaurant_id=:id ORDER BY time_published;";
+$query = "SELECT * FROM Review WHERE restaurant_id=:id ORDER BY time_published;";
 $statement = $db->prepare($query);
 $statement->bindValue(':id',$id);
 $statement->execute();
