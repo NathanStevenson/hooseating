@@ -140,7 +140,7 @@
                 $name = $val['name'];
                 $id = $val['restaurant_id'];
                 // echo "<div> <h3><a class='button' href='restaurant.php?id=$id'>$name</a></h3> </div>";
-                echo "<div> <h3><a class='button' href='https://www.cs.virginia.edu/~ffk9uu/hooseating/add_restaurant.php?id=$id'>$name</a></h3> </div>";
+                echo "<div> <h3><a class='button' href='https://www.cs.virginia.edu/~ffk9uu/hooseating/restaurant.php?id=$id'>$name</a></h3> </div>";
                      
             }    
         }
