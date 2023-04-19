@@ -2,11 +2,12 @@
     // TOP OF EVERY PAGE WITH HTML
     session_start();
 
+    $redirect = "nts7bcj";
     $active_user = "";
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~" . $redirect . "/hooseating/form.php/");
         // header("Location: form.php/");
     }else{
         $active_user = $_SESSION['username'];
@@ -99,10 +100,10 @@
     </head>
     <body>
         <nav>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
         </nav>
     </body>
 
@@ -120,7 +121,7 @@
     <select class="form-control" id="cuisine" name="cuisine">
       <?php
         // PHP code to retrieve options from SQL table and populate dropdown list
-        $query = "SELECT DISTINCT cuisine FROM restaurant";
+        $query = "SELECT DISTINCT cuisine FROM Restaurant";
         $statement = $db->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_COLUMN);
@@ -140,7 +141,7 @@
 // Finds first available restauraunt_id (taken from login_register.php)
     function max_rest_id(){
         global $db;
-        $query = "SELECT MAX(restaurant_id) FROM restaurant";
+        $query = "SELECT MAX(restaurant_id) FROM Restaurant";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchColumn();
@@ -151,7 +152,7 @@
     // if restaurant already exists via address & name
     function restaurant_taken($address, $name){
         global $db;
-        $query = "SELECT * FROM restaurant WHERE address=:address AND name=:name";
+        $query = "SELECT * FROM Restaurant WHERE address=:address AND name=:name";
         $statement = $db->prepare($query);
         $statement->bindValue(':address', $address);
         $statement->bindValue(':name', $name);
@@ -164,7 +165,7 @@
     function add_restaurant($address, $name, $cuisine){
         global $db;
         $id = max_rest_id()+1;
-        $query = "INSERT INTO restaurant VALUES (:id, NULL, :cuisine, :address, :name);";
+        $query = "INSERT INTO Restaurant VALUES (:id, NULL, :cuisine, :address, :name);";
         $statement= $db->prepare($query);
         $statement->bindValue(':id', $id);
         $statement->bindValue('cuisine', $cuisine);

@@ -3,10 +3,11 @@
 session_start();
 
 $active_user = "";
+$redirect = "nts7bcj";
 // if the user is not logged in then redirect them to the login_page
 if (!isset($_SESSION['username'])) {
     // redirect the user to the login page
-    header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+    header("Location: https://www.cs.virginia.edu/~" . $redirect . "/hooseating/form.php/");
     // header("Location: form.php/");
 }else{
     $active_user = $_SESSION['username'];
@@ -20,7 +21,7 @@ require("profile_page_db.php");
 
 // getting current restaurant into $restaurant
 $id = $_GET['id'];
-$query = "SELECT * FROM restaurant where restaurant_id=:id;";
+$query = "SELECT * FROM Restaurant where restaurant_id=:id;";
 $statement = $db->prepare($query);
 $statement->bindValue(':id',$id);
 $statement->execute();
@@ -28,7 +29,7 @@ $restaurant = $statement->fetch();
 $statement->closeCursor();
 
 // getting 50 most recent reviews into $reviews
-$query = "SELECT * FROM review WHERE restaurant_id=:id ORDER BY time_published;";
+$query = "SELECT * FROM Review WHERE restaurant_id=:id ORDER BY time_published;";
 $statement = $db->prepare($query);
 $statement->bindValue(':id',$id);
 $statement->execute();
@@ -119,10 +120,10 @@ $statement->closeCursor();
     </head>
     <body>
         <nav>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
         </nav>
     </body>
 
@@ -163,7 +164,7 @@ $statement->closeCursor();
 
     function max_rest_id(){
         global $db;
-        $query = "SELECT MAX(rating_id) FROM review";
+        $query = "SELECT MAX(rating_id) FROM Review";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchColumn();
@@ -175,7 +176,7 @@ $statement->closeCursor();
     // per restaurant. TODO: edit review functionality
     function already_reviewed($user_id){
         global $db;
-        $query = "SELECT * FROM review where user_id=:user_id";
+        $query = "SELECT * FROM Review where user_id=:user_id";
         $statement = $db->prepare($query);
         $statement->bindValue('user_id', $user_id);
         $statement->execute();
@@ -186,7 +187,7 @@ $statement->closeCursor();
 
     function get_id_from_username($name){
         global $db;
-        $query = "SELECT user_id FROM user where name=:name";
+        $query = "SELECT user_id FROM User where name=:name";
         $statement = $db->prepare($query);
         $statement->bindValue('name', $name);
         $statement->execute();
@@ -203,7 +204,7 @@ $statement->closeCursor();
         $numberoflikes = 0;
         $time = time();
 
-        $query = "INSERT INTO review VALUES (:rating_id, :user_id, :restaurant_id, :number_of_likes, :summary, :rating, :time_published);";
+        $query = "INSERT INTO Review VALUES (:rating_id, :user_id, :restaurant_id, :number_of_likes, :summary, :rating, :time_published);";
         $statement = $db->prepare($query);
         $statement->bindValue(':rating_id', $rating_id);
         $statement->bindValue(':user_id', $user_id);
