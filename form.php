@@ -26,7 +26,7 @@
                     $wrong_credential_msg = "";
                     // Redirect the user to the main page
                     // change the redirect location for local testing with your computing ID
-                    header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/");
+                    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
                     // header("Location: main_page.php/");
                 // User entered the wrong info
                 }else{
@@ -55,7 +55,7 @@
                 add_user($userid, $_POST['name'], $_POST['password']);
                 $active_user = username_taken($_POST['name']);
                 // Redirect the user to the main page
-                header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/");
+                header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
                 // header("Location: main_page.php/");
             }
         }
