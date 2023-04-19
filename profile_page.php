@@ -8,6 +8,7 @@
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
         header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+        //header("Location: form.php/");
     }else{
         $active_user = $_SESSION['username'];
     }
