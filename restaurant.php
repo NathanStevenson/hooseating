@@ -163,7 +163,7 @@ $statement->closeCursor();
 
     function max_rest_id(){
         global $db;
-        $query = "SELECT MAX(rating_id) FROM review";
+        $query = "SELECT MAX(rating_id) FROM Review";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchColumn();
@@ -175,7 +175,7 @@ $statement->closeCursor();
     // per restaurant. TODO: edit review functionality
     function already_reviewed($user_id){
         global $db;
-        $query = "SELECT * FROM review where user_id=:user_id";
+        $query = "SELECT * FROM Review where user_id=:user_id";
         $statement = $db->prepare($query);
         $statement->bindValue('user_id', $user_id);
         $statement->execute();
@@ -186,7 +186,7 @@ $statement->closeCursor();
 
     function get_id_from_username($name){
         global $db;
-        $query = "SELECT user_id FROM user where name=:name";
+        $query = "SELECT user_id FROM User where name=:name";
         $statement = $db->prepare($query);
         $statement->bindValue('name', $name);
         $statement->execute();
