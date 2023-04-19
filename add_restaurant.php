@@ -2,12 +2,11 @@
     // TOP OF EVERY PAGE WITH HTML
     session_start();
 
-    $redirect = "nts7bcj";
     $active_user = "";
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~" . $redirect . "/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
         // header("Location: form.php/");
     }else{
         $active_user = $_SESSION['username'];
@@ -100,10 +99,10 @@
     </head>
     <body>
         <nav>
-            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~<?php echo $redirect;?>/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
         </nav>
     </body>
 
@@ -121,7 +120,7 @@
     <select class="form-control" id="cuisine" name="cuisine">
       <?php
         // PHP code to retrieve options from SQL table and populate dropdown list
-        $query = "SELECT DISTINCT Cuisine FROM Restaurant";
+        $query = "SELECT DISTINCT cuisine FROM Restaurant";
         $statement = $db->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_COLUMN);
