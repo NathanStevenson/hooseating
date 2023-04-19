@@ -6,7 +6,7 @@ $active_user = "";
 // if the user is not logged in then redirect them to the login_page
 if (!isset($_SESSION['username'])) {
     // redirect the user to the login page
-    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+    header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
     // header("Location: form.php/");
 }else{
     $active_user = $_SESSION['username'];
