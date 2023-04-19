@@ -110,7 +110,7 @@
         }
         </style>
     </head>
-    <body>
+    <body style="background-color: #DFFFFD">
         <nav>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
@@ -130,7 +130,7 @@
 
 
         
-        <div>
+        <div style="background-color: white">
             <?php
                 echo '<div class = "container mt-5">';
                     echo '<div class = "restaurants">';

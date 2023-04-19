@@ -95,22 +95,22 @@
 
         </style>
     </head>
-    <body>
+    <body style="background-color: #DFFFFD">
         <nav>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
         </nav>
-        <h1>Please Enter Restaurant Name:</h1>
-        <div style="display: flex; justify-content: left;">
-            <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <input type="text" id="rname" name="rname">
-            <button type="submit">Search</button>
-
+        <h1 class="text-center my-4">Restaurant Finder</h1>
+        <div class="mx-auto w-75 mb-4" style="background-color: #DFFFFD">
+            <form class="w-100 d-inline" style="background-color: white" method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <input class="w-75 d-inline-block" style="line-height: 2.5em; background-color: white" type="text" id="rname" name="rname" 
+            placeholder="Enter the restaurant you would like to review!">
+            <button class="btn btn-primary d-inline-block ms-3" style="height: 2.8em;" type="submit">Search</button>
             </form>
-            <form method="post"?>
-            <button type="submit" id="radd" name="radd">Add new Restaurant</button>
+            <form method="post"? class="d-inline ms-3" style="background-color: #DFFFFD">
+                <button class="btn btn-primary d-inline-block" style="height: 2.8em;" type="submit" id="radd" name="radd">Add new Restaurant</button>
             </form>
         </div>
 </body>
@@ -127,22 +127,36 @@
     // search button logic
     else if(isset($_GET['rname']) and strlen($_GET['rname']) > 0){
         $res = isset($_GET['rname']) ? $_GET['rname'] : '';
-        $query = "SELECT * FROM Restaurant WHERE name LIKE :res";
+        $query = "SELECT * FROM Restaurant WHERE name LIKE :res LIMIT 4";
         $statement = $db->prepare($query);
-        $statement->bindValue(':res', "%$res%", PDO::PARAM_STR); //has to do this PDO jank to use LIKE :res
+        $statement->bindValue(':res', "$res%", PDO::PARAM_STR); //has to do this PDO jank to use LIKE :res
         $statement->execute();
         $result = $statement->fetchAll();
         $statement->closeCursor();
         
         if($result){  
+            echo '<div class="w-100 mx-auto mx-5 mt-3 d-flex justify-content-evenly">';
             // print each returned restaurant name
             foreach ($result as &$val){
                 $name = $val['name'];
                 $id = $val['restaurant_id'];
-                // echo "<div> <h3><a class='button' href='restaurant.php?id=$id'>$name</a></h3> </div>";
-                echo "<div> <h3><a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=$id'>$name</a></h3> </div>";
-                     
-            }    
+                $address = $val['address'];
+                $cuisine = $val['cuisine'];
+                $avg_rating = $val['avg_rating'];
+
+                echo"<div class='d-inline-block shadow border border-secondary border-3 rounded-3' style='background-color: white; width: 20%;'>
+                        <div class='p-3'>
+                            <div class='mb-2'><p class='fw-bold d-inline'>Name:</p> $name</div>
+                            <div class='mb-2'><p class='fw-bold d-inline'>Address:</p> $address</div>
+                            <div class='mb-2'><p class='fw-bold d-inline'>Average Rating:</p> $avg_rating</div>
+                            <div class='mb-2'><p class='fw-bold d-inline'>Cuisine:</p> $cuisine</div>
+                            <div class='w-50 mx-auto'>
+                                <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=$id'>Leave a Review</a>
+                            </div>
+                        </div>
+                    </div>";                     
+            }
+            echo "</div>";   
         }
         else{
             echo "<h3>Not found; refine search or add new restaurant!</h3>";
