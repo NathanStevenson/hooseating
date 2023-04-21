@@ -97,42 +97,48 @@
 
         </style>
     </head>
-    <body>
+    <body style="background-color: #DFFFFD">
         <nav>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Find a Restaurant</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
         </nav>
-    </body>
 
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <div class="mb-3">
-        <label for="rname" class="form-label">Restaurant Name:</label>
-        <input type="text" class="form-control" id="rname" name="rname">
-    </div>
-    <div class="mb-3">
-        <label for="address" class="form-label">Address:</label>
-        <input type="text" class="form-control" id="address" name="address">
-    </div>
-    <div class="mb-3">
-    <label for="cuisine" class="form-label">Cuisine (select one):</label>
-    <select class="form-control" id="cuisine" name="cuisine">
-      <?php
-        // PHP code to retrieve options from SQL table and populate dropdown list
-        $query = "SELECT DISTINCT cuisine FROM Restaurant";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_COLUMN);
-        $statement->closeCursor();
-        foreach ($result as $option) {
-          echo "<option value='$option'>$option</option>";
-        }
-      ?>
-    </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit Restaurant</button>
-    </form>
+        <h1 class='text-center mt-4 mb-4'>Add a New Restaurant</h1>
+        <div class=" shadow w-50 mx-auto border border-secondary border-3 rounded-3 mt-2" style="background-color: white;">
+            <form method="post" class="p-4 w-100" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <div class="mb-3">
+                    <label for="rname" class="form-label">Restaurant Name:</label>
+                    <input type="text" class="form-control" id="rname" name="rname">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address:</label>
+                    <input type="text" class="form-control" id="address" name="address">
+                </div>
+                <div class="mb-3">
+                <label for="cuisine" class="form-label">Cuisine (select one):</label>
+                <select class="form-control" id="cuisine" name="cuisine">
+                <?php
+                    // PHP code to retrieve options from SQL table and populate dropdown list
+                    $query = "SELECT DISTINCT cuisine FROM Restaurant";
+                    $statement = $db->prepare($query);
+                    $statement->execute();
+                    $result = $statement->fetchAll(PDO::FETCH_COLUMN);
+                    $statement->closeCursor();
+                    foreach ($result as $option) {
+                    echo "<option value='$option'>$option</option>";
+                    }
+                ?>
+                </select>
+                </div>
+                <div class="w-25 mx-auto">
+                    <button type="submit" class="btn btn-primary">Submit Restaurant</button>
+                </div>
+            </form>
+        </div>
+
+    </body>
 
 </html>
 

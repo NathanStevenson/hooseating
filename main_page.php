@@ -123,7 +123,7 @@
 
         </style>
     </head>
-    <body>
+    <body style="background-color: #DFFFFD">
         <nav>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
@@ -177,7 +177,7 @@
             // Inner loop for columns
             foreach (range(1, 4) as $col) {
                 // the periods are used in php to concat the echo calls
-                echo '<div class="col border border-secondary border-2 rounded-3 m-3">' . '<div>' . $top_rated_rests[$count]['name'] . '</div>' . 
+                echo '<div class="col border border-secondary border-2 rounded-3 m-3" style="background-color: white">' . '<div>' . $top_rated_rests[$count]['name'] . '</div>' . 
                               '<div>' . $top_rated_rests[$count]['address'] . '</div>' . 
                               '<div>' . $top_rated_rests[$count]['avg_rating'] . '</div>' .'</div>';
                 $count++;

@@ -6,7 +6,11 @@ $active_user = "";
 // if the user is not logged in then redirect them to the login_page
 if (!isset($_SESSION['username'])) {
     // redirect the user to the login page
+<<<<<<< HEAD
     header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+=======
+    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+>>>>>>> 51e7d9f45e95e6c7f0e5b009d124aa7299ea3b6c
     // header("Location: form.php/");
 }else{
     $active_user = $_SESSION['username'];
@@ -17,9 +21,9 @@ require("utilities.php");
 require("main_page_proc.php");
 require("profile_page_db.php");
 
-
 // getting current restaurant into $restaurant
 $id = $_GET['id'];
+<<<<<<< HEAD
 $query = "SELECT * FROM Restaurant where restaurant_id=:id";
 $statement = $db->prepare($query);
 $statement->bindValue(':id',$id);
@@ -34,6 +38,57 @@ $statement->bindValue(':id',$id);
 $statement->execute();
 $reviews = $statement->fetchALL(PDO::FETCH_ASSOC);
 $statement->closeCursor();
+=======
+function get_rest($id){
+    global $db;
+    $query = "SELECT * FROM Restaurant where restaurant_id=:id;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id',$id);
+    $statement->execute();
+    $restaurant = $statement->fetch();
+    $statement->closeCursor();
+    return $restaurant;
+}
+
+// getting the four most recent reviews for the restaurant
+function get_rest_reviews($id){
+    global $db;
+    $query = "SELECT * FROM Review WHERE restaurant_id=:id ORDER BY time_published DESC LIMIT 4;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id',$id);
+    $statement->execute();
+    $reviews = $statement->fetchALL(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    return $reviews;
+}
+
+$restaurant = get_rest($id);
+$reviews = get_rest_reviews($id);
+
+// to stop someone from spamming reviews: allow them to only have 1 review
+// per restaurant. TODO: edit review functionality
+function already_reviewed($user_id){
+    global $db;
+    $query = "SELECT * FROM Review where user_id=:user_id";
+    $statement = $db->prepare($query);
+    $statement->bindValue('user_id', $user_id);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+
+function get_username_from_id($id){
+    global $db;
+    $query = "SELECT name FROM User where user_id=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue('id', $id);
+    $statement->execute();
+    $user_name = $statement->fetch();
+    $statement->closeCursor();
+    return $user_name['name'];
+}
+>>>>>>> 51e7d9f45e95e6c7f0e5b009d124aa7299ea3b6c
 
 ?>
 
@@ -114,53 +169,65 @@ $statement->closeCursor();
         margin-bottom: 0;
         }
 
+        a.button {
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 5px;
+            padding: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+        }
+
+        a.button:hover {
+            background-color: #0069d9;
+        }
+
+        #heart {
+            color: lightpink;
+        }
+
+        #heart:hover{
+            color: red;
+            cursor: pointer;
+        }
+
 
         </style>
     </head>
-    <body>
+    <body style="background-color: #DFFFFD; height: 100vh;">
         <nav>
+<<<<<<< HEAD
             <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
             <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
             <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+=======
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Find a Restaurant</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+>>>>>>> 51e7d9f45e95e6c7f0e5b009d124aa7299ea3b6c
         </nav>
-    </body>
 
-        <body>
-
-            <h1><?php echo $restaurant['name']; ?></h1>
-            <p><?php echo $restaurant['address']; ?></p>
-
-            <ul>
-            <li>Average Rating: <?php echo $restaurant['avg_rating']; ?></li>
-            <li>Cuisine: <?php echo $restaurant['cuisine']; ?></li>
-            </ul>
-
-            <div style="overflow-y: scroll; height: 200px;">
-                <?php foreach ($reviews as $r): ?>
-                    <p><?php echo $r['rating'] . ': ' . $r['summary']; ?></p>
-                <?php endforeach; ?>
+        <div class='border-bottom border-2' style="height: 50vh;">
+            <!-- Background will eventually be the restaurant image on DB -->
+            <div class="d-flex align-items-end border-bottm border-end border-2" style="float: left; width: 65%; height: 50vh;">
+                <?php echo "<div style='font-size: 50px; color: white; font-weight: bold; padding-left: 5%;'>" . $restaurant['name'] . "</div>"?>
             </div>
 
+            <div style="float: right; width: 35%; height: 50vh;">
+                <div class='fw-bold fs-2 text-center mt-3'>Restaurant Info</div>
+                <div class='fw-bold fs-4 text-center mt-2'>Address</div>
+                <div class='text-center mb-3'><?php echo $restaurant['address']; ?></div>
 
-            <h2>Write new review</h2>
-            <form method="post" action="restaurant.php?id=<?php echo $id; ?>">
-            <div class="mb-3">
-                <label for="rating" class="form-label">Rating (0-10):</label>
-                <input type="number" class="form-control" id="rating" name="rating" min="0" max="10" step="0.1">
-            </div>
-            <div class="mb-3">
-                <label for="summary" class="form-label">Summary:</label>
-                <input type="text" class="form-control" id="summary" name="summary">            
-            </div>
-                <button type="submit" name ="s" id="s" class="btn btn-primary">Submit Review</button>            
-            </form>
+                <div class='fw-bold fs-4 text-center'>Average Rating</div>
+                <div class='text-center mb-3'><?php echo $restaurant['avg_rating']; ?></div>
 
-        </body>
-</html>
+                <div class='fw-bold fs-4 text-center'>Cuisine</div>
+                <div class='text-center mb-4'><?php echo $restaurant['cuisine']; ?></div>
 
-<?php
-
+<<<<<<< HEAD
     function max_rest_id(){
         global $db;
         $query = "SELECT MAX(rating_id) FROM Review";
@@ -245,3 +312,44 @@ $statement->closeCursor();
 
     }
 ?>
+=======
+                <div class='text-center'>
+                    <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/submit_review.php?id=<?php echo $id;?>'>Leave a Review</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-2">
+            <div class="fw-bold fs-3 mb-3 ms-3">Most Recent Reviews</div>
+
+            <?php
+            echo '<div class="w-100 mx-auto mx-5 mt-3 d-flex justify-content-evenly">';
+            foreach ($reviews as $r){
+                $username = get_username_from_id($r['user_id']);
+                $summary = $r['summary'];
+                $rating = $r['rating'];
+                $num_likes = $r['number_of_likes'];
+                $time_pub = $r['time_published'];
+                
+                echo"<div class='shadow border border-secondary border-3 rounded-3' style='background-color: white; width: 20%;'> 
+                        <div class='m-3'>
+                            <div class='d-flex justify-content-between mb-2 border-bottom border-secondary border-4'>
+                                <div>$username</div>
+                                <div>$rating</div>
+                            </div>
+
+                            <div class='mb-2' style='height:85px;'>$summary</div>
+
+                            <div class='mb-2 d-flex justify-content-between align-self-end'>
+                                <div>$time_pub</div>
+                                <div class='d-inline'>$num_likes <div class='d-inline' id='heart' title='Like'>&hearts;</div></div>
+                            </div>
+                        </div>                    
+                    </div>";
+            }
+            echo '</div>';
+            ?>
+        </div>                    
+    </body>
+</html>
+>>>>>>> 51e7d9f45e95e6c7f0e5b009d124aa7299ea3b6c
