@@ -168,7 +168,7 @@ if(isset($_POST['s']) and strlen($_POST['summary']) > 0 and strlen($_POST['ratin
                 </div>
 
                 <div class='w-25 mx-auto'>
-                    <button type="submit" name ="s" id="s" class="btn btn-primary">Submit Review</button>
+                    <button type="submit" name="s" id="s" class="btn btn-primary">Submit Review</button>
                 </div>
             </div>           
         </form>
