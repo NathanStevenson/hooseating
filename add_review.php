@@ -98,7 +98,7 @@
     <body style="background-color: #DFFFFD">
         <nav>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Find a Restaurant</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
         </nav>
@@ -149,9 +149,9 @@
                             <div class='mb-2'><p class='fw-bold d-inline'>Name:</p> $name</div>
                             <div class='mb-2'><p class='fw-bold d-inline'>Address:</p> $address</div>
                             <div class='mb-2'><p class='fw-bold d-inline'>Average Rating:</p> $avg_rating</div>
-                            <div class='mb-2'><p class='fw-bold d-inline'>Cuisine:</p> $cuisine</div>
-                            <div class='w-50 mx-auto'>
-                                <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=$id'>Leave a Review</a>
+                            <div class='mb-3'><p class='fw-bold d-inline'>Cuisine:</p> $cuisine</div>
+                            <div class='text-center'>
+                                <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=$id'>Restaurant Details</a>
                             </div>
                         </div>
                     </div>";                     
