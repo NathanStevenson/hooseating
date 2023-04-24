@@ -13,29 +13,35 @@
     // Code that executes upon a POST command need to check the value of the button to proceed with logic
     $authAttempt = 0;
     if($_SERVER['REQUEST_METHOD']=='POST'){
+        debug_to_console("POST");
         // Code to validate if the username and password are legit upon login button being clicked
         if(!empty($_POST['actionBtn']) && $_POST['actionBtn']=="LOGIN"){
+            debug_to_console("LOGIN");
             $auth = checkLogin($_POST['name'], $_POST['password']);
             $authAttempt = 1;
             if($authAttempt){
                 // If the user is authenticated
                 if($auth){
                     // Stores user in the session variable
+                    debug_to_console("AUTH");
                     $_SESSION['username'] = $_POST['name']; 
                     // Updates the error message 
                     $wrong_credential_msg = "";
                     // Redirect the user to the main page
                     // change the redirect location for local testing with your computing ID
+                    debug_to_console("HEADER");
                     header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/");
                     // header("Location: main_page.php/");
                 // User entered the wrong info
                 }else{
+                    debug_to_console("x");
                     $wrong_credential_msg = "Invalid Credentials!";
                 }
             }
         }
         //  Code that checks whether or not the username currently exists when the user clicks the register button on the login page
         if (!empty($_POST['actionBtn']) && $_POST['actionBtn']=="REGISTER"){
+            debug_to_console("REGISTER");
             $res = username_taken($_POST['name']);
             // If there is another user in the database with that name
             if ($res){
@@ -46,14 +52,15 @@
                 $username_exists_msg = "Username is too long (max: 30)!";
             }
             else{
-                // Stores user in the session variable
-                $_SESSION[$res['name']] = $res['name'];
-
+                debug_to_console("ADD");
                 $username_exists_msg = "";
                 // Code that assigns each user a new unique ID
                 $userid = max_user_id() + 1;
+                debug_to_console("add_user-1");
                 add_user($userid, $_POST['name'], $_POST['password']);
-                $active_user = username_taken($_POST['name']);
+                // Stores user in the session variable
+                $_SESSION['username'] = $_POST['name'];
+                $active_user = $_SESSION['username'];
                 // Redirect the user to the main page
                 header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/");
                 // header("Location: main_page.php/");

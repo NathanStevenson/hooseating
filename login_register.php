@@ -13,6 +13,7 @@
 
     // Function that checks if the users username and password are valid upon sign in
     function checkLogin($username, $password){
+        debug_to_console("CHECK LOGIN");
         global $db;
         $query = "SELECT * FROM User WHERE name=:name AND password=PASSWORD(:password)";
         $statement = $db->prepare($query);
@@ -26,8 +27,9 @@
 
     // Function that registers a user in our database on login
     function add_user($id, $uname, $pwd){
+        debug_to_console("add_user");
         global $db;
-        $query = "INSERT INTO User VALUES (:id, :uname, NULL, PASSWORD(:pwd));";
+        $query = "INSERT INTO User VALUES (:id, :uname, NULL, PASSWORD(:pwd), NULL)";
         $statement = $db->prepare($query);
         // bind the templates if not an executable
         $statement->bindValue(':id', $id);
