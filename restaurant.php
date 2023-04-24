@@ -6,14 +6,18 @@ $active_user = "";
 // if the user is not logged in then redirect them to the login_page
 if (!isset($_SESSION['username'])) {
     // redirect the user to the login page
-<<<<<<< HEAD
     header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
-=======
-    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
->>>>>>> 51e7d9f45e95e6c7f0e5b009d124aa7299ea3b6c
     // header("Location: form.php/");
 }else{
     $active_user = $_SESSION['username'];
+}
+
+//Log Out
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    if(isset($_POST['logout'])){
+        session_destroy();
+        header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+    }
 }
 
 require("connect-db.php");
@@ -23,22 +27,6 @@ require("profile_page_db.php");
 
 // getting current restaurant into $restaurant
 $id = $_GET['id'];
-<<<<<<< HEAD
-$query = "SELECT * FROM Restaurant where restaurant_id=:id";
-$statement = $db->prepare($query);
-$statement->bindValue(':id',$id);
-$statement->execute();
-$restaurant = $statement->fetch();
-$statement->closeCursor();
-
-// getting 50 most recent reviews into $reviews
-$query = "SELECT * FROM Review WHERE restaurant_id=:id ORDER BY time_published";
-$statement = $db->prepare($query);
-$statement->bindValue(':id',$id);
-$statement->execute();
-$reviews = $statement->fetchALL(PDO::FETCH_ASSOC);
-$statement->closeCursor();
-=======
 function get_rest($id){
     global $db;
     $query = "SELECT * FROM Restaurant where restaurant_id=:id;";
@@ -88,7 +76,6 @@ function get_username_from_id($id){
     $statement->closeCursor();
     return $user_name['name'];
 }
->>>>>>> 51e7d9f45e95e6c7f0e5b009d124aa7299ea3b6c
 
 ?>
 
@@ -192,22 +179,32 @@ function get_username_from_id($id){
             cursor: pointer;
         }
 
+        nav input.prof{
+            background: lightskyblue;
+            float: right;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            border: none;
+        }
 
+        nav input.prof:hover {
+            color: navy;
+            text-decoration: underline;
+        }
         </style>
     </head>
     <body style="background-color: #DFFFFD; height: 100vh;">
         <nav>
-<<<<<<< HEAD
             <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
             <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
             <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
-=======
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Find a Restaurant</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
->>>>>>> 51e7d9f45e95e6c7f0e5b009d124aa7299ea3b6c
+            <form method="POST">
+                <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
+            </form>
         </nav>
 
         <div class='border-bottom border-2' style="height: 50vh;">
@@ -227,94 +224,8 @@ function get_username_from_id($id){
                 <div class='fw-bold fs-4 text-center'>Cuisine</div>
                 <div class='text-center mb-4'><?php echo $restaurant['cuisine']; ?></div>
 
-<<<<<<< HEAD
-    function max_rest_id(){
-        global $db;
-        $query = "SELECT MAX(rating_id) FROM Review";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $results = $statement->fetchColumn();
-        $statement->closeCursor();
-        return $results;
-    }
-
-    // to stop someone from spamming reviews: allow them to only have 1 review
-    // per restaurant. TODO: edit review functionality
-    function already_reviewed($user_id){
-        global $db;
-        $query = "SELECT * FROM Review where user_id=:user_id";
-        $statement = $db->prepare($query);
-        $statement->bindValue('user_id', $user_id);
-        $statement->execute();
-        $result = $statement->fetch();
-        $statement->closeCursor();
-        return $result;
-    }
-
-    function get_id_from_username($name){
-        global $db;
-        $query = "SELECT user_id FROM User where name=:name";
-        $statement = $db->prepare($query);
-        $statement->bindValue('name', $name);
-        $statement->execute();
-        $user_id = $statement->fetch();
-        $statement->closeCursor();
-        return $user_id['user_id'];
-
-    }
-
-    function write_review($user, $restaurant_id, $summary, $rating  ){
-        global $db;
-        $user_id = $user;
-        $rating_id = max_rest_id() + 1;
-        $numberoflikes = 0;
-        $time = time();
-
-        $query = "INSERT INTO Review VALUES (:rating_id, :user_id, :restaurant_id, :number_of_likes, :summary, :rating, :time_published);";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':rating_id', $rating_id);
-        $statement->bindValue(':user_id', $user_id);
-        $statement->bindValue(':restaurant_id', $restaurant_id);
-        $statement->bindValue(':number_of_likes', $numberoflikes);
-        $statement->bindValue(':summary', $summary);
-        $statement->bindValue(':rating', $rating);
-        $statement->bindValue(':time_published', $time);
-        $statement->execute();
-        $statement->closeCursor();
-
-    }
-
-    
-    if(isset($_POST['s']) and strlen($_POST['summary']) > 0 and strlen($_POST['rating']) > 0){
-
-        $user_id = get_id_from_username($active_user);
-
-        // originally thought we shouldn't let users write 2 reviews but I cant seem to delete reviews in the db for testing purposes.
-        // if(!already_reviewed($user_id)){
-        //     echo "eligible to write a review";
-        //     $restaurant_id = $id;        
-        //     $summary = $_POST['summary'];
-        //     $rating = $_POST['rating'];
-
-        //     write_review($user_id, $restaurant_id, $summary, $rating);
-        //     $url = "restaurant.php?id=".$restaurant_id;
-        //     header($url);
-        
-        // }else{
-        //     echo "you've already left a review. soon we'll add a feature to edit reviews. wow";
-        // }
-
-        $restaurant_id = $id;        
-        $summary = $_POST['summary'];
-        $rating = $_POST['rating'];
-
-        write_review($user_id, $restaurant_id, $summary, $rating);
-
-    }
-?>
-=======
                 <div class='text-center'>
-                    <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/submit_review.php?id=<?php echo $id;?>'>Leave a Review</a>
+                    <a class='button' href='https://www.cs.virginia.edu/~ffk9uu/hooseating/submit_review.php?id=<?php echo $id;?>'>Leave a Review</a>
                 </div>
             </div>
         </div>
@@ -352,4 +263,3 @@ function get_username_from_id($id){
         </div>                    
     </body>
 </html>
->>>>>>> 51e7d9f45e95e6c7f0e5b009d124aa7299ea3b6c

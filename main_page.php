@@ -11,7 +11,7 @@
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
     }else{
         $active_user = $_SESSION['username'];
     }
@@ -71,6 +71,12 @@
             $_SESSION['restaurants'] = "fast-food";
             $top_rated_rests = display_restaurants($_SESSION['filter_type'], $_SESSION['restaurants']);
         }
+
+        //Log Out
+        if(isset($_POST['logout'])){
+            session_destroy();
+            header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+        }
     }
 ?>
 
@@ -110,6 +116,22 @@
         nav a.prof{
             float:right;
         }
+
+        nav input.prof{
+            background: lightskyblue;
+            float: right;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            border: none;
+        }
+
+        nav input.prof:hover {
+            color: navy;
+            text-decoration: underline;
+        }
         
         #sortbydropdown input{
             color: white;
@@ -125,10 +147,13 @@
     </head>
     <body style="background-color: #DFFFFD">
         <nav>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <form method="POST">
+                <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
+            </form>
         </nav>
 
         <div class="d-md-inline-flex">
