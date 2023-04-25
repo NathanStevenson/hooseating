@@ -175,7 +175,7 @@
                             <div class='mb-2'><p class='fw-bold d-inline'>Average Rating:</p> $avg_rating</div>
                             <div class='mb-3'><p class='fw-bold d-inline'>Cuisine:</p> $cuisine</div>
                             <div class='text-center'>
-                                <a class='button' href='https://www.cs.virginia.edu/~fk9uu/hooseating/restaurant.php?id=$id'>Restaurant Details</a>
+                                <a class='button' href='https://www.cs.virginia.edu/~ffk9uu/hooseating/restaurant.php?id=$id'>Restaurant Details</a>
                             </div>
                         </div>
                     </div>";                     
