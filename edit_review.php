@@ -17,17 +17,16 @@
 
     $review_id=$_GET['review_id'];
     $review_data = get_review($review_id);
-    // foreach(range(0,10) as $i){
-    //     debug_to_console($review_data[$i]);
-    // }
-    debug_to_console($review_data[0]['summary']);
     $summary=$review_data[0]['summary'];
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(isset($_POST['confirm_edit'])){
+            
+            debug_to_console("id".$review_data[0]['summary']);
+            debug_to_console($_POST['summary']);
+            debug_to_console($_POST['rating']);
+            update_review($review_id, $_POST['summary'], $_POST['rating']);
             $error_message = "";
-            header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/");
-        }else{
-            $error_message = "Accepted File Types are JPEG, JPG, or PNG.";
+            // header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/");
         }
         
         //Log Out

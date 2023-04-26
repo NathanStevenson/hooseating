@@ -12,12 +12,14 @@ function get_review($id){
     return $result;
 }
 
-// function update_review($id){
-//     global $db;
-//     $query = "INSERT INTO Review values()"; 
-//     $statement = $db->prepare($query);
-//     $statement->bindValue(':id', $id);
-//     $statement->execute();
-//     $statement->closeCursor();
-// }
+function update_review($id, $new_summary, $new_rating){
+    global $db;
+    $query = "UPDATE Review SET summary=:summary, rating=:rating WHERE rating_id=:id"; 
+    $statement = $db->prepare($query);
+    $statement->bindValue(':summary', $new_summary);
+    $statement->bindValue(':rating', $new_rating);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $statement->closeCursor();
+}
 ?>
