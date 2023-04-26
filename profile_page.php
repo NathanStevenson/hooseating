@@ -22,7 +22,8 @@
     $num_rated_restaurants = sizeof($user_rated_restaurants);
     $user_reviews = get_user_reviews($active_user);
     $num_reviews = sizeof($user_reviews);
-
+    // $profile_pic = get_profile_pic($active_user);
+    // debug_to_console($profile_pic["imageType"]);
 
     //Log Out
     if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -52,6 +53,7 @@
             overflow: hidden;
         }
 
+       
         nav a {
             float: left;
             color: #f2f2f2;
@@ -130,6 +132,9 @@
         <div class='d-flex pt-3'>
             <div class='w-50 d-flex flex-column text-center'>
                 <div class='my-4'>
+                    <!-- <?php 
+                        echo '<img src="data:image/jpeg;base64,'.base64_encode($profile_pic['profile_photo']).'"/>'; 
+                    ?> -->
                     <img src="../images/default.png" alt="Profile Picture">
                 </div>
 
@@ -159,7 +164,7 @@
                             //apparently in php periods are used to concatenate strings lmao
                             echo '<p>';
                                 echo '<div class="reviewtitle">';
-                                    echo '<h5>'.$restaurant[0][0].'</h5>';
+                                    echo '<h5>'.$restaurant[0][0].'  <a class="text-decoration-none fs-3" href="https://www.cs.virginia.edu/~ffk9uu/hooseating/edit_review.php/?review_id='.$user_reviews[$review]['rating_id'].'">&#9881</a>'.'</h5>';
                                 echo '</div>';
 
                                 echo '<div class="reviewrating">';
@@ -167,10 +172,10 @@
                                 echo '</div>';
                             echo '</p>';
                             echo '<br>';
-
-                            // echo '<p>'.$user_reviews[$review]['summary'].', Rating: '.$user_reviews[$review]['rating'].'</p>';
+                            
+                            // summary
                             echo '<p>';
-                                echo '<p>'.$user_reviews[$review]['summary'].'</p>';
+                                echo '<p>'.$user_reviews[$review][4].'</p>';
                             echo '</p>';
                         }
                     echo '</div>';
