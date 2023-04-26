@@ -77,6 +77,10 @@ function get_username_from_id($id){
     return $user_name['name'];
 }
 
+function add_like($restaurant_id){
+    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -241,24 +245,28 @@ function get_username_from_id($id){
                 $rating = $r['rating'];
                 $num_likes = $r['number_of_likes'];
                 $time_pub = $r['time_published'];
-                
-                echo"<div class='shadow border border-secondary border-3 rounded-3' style='background-color: white; width: 20%;'> 
-                        <div class='m-3'>
-                            <div class='d-flex justify-content-between mb-2 border-bottom border-secondary border-4'>
-                                <div>$username</div>
-                                <div>$rating</div>
-                            </div>
-
-                            <div class='mb-2' style='height:85px;'>$summary</div>
-
-                            <div class='mb-2 d-flex justify-content-between align-self-end'>
-                                <div>$time_pub</div>
-                                <div class='d-inline'>$num_likes <div class='d-inline' id='heart' title='Like'>&hearts;</div></div>
-                            </div>
-                        </div>                    
-                    </div>";
+                $id = $_GET['id'];
+                echo "<div class='shadow border border-secondary border-3 rounded-3' style='background-color: white; width: 20%;'>
+                    <div class='m-3'>
+                        <div class='d-flex justify-content-between mb-2 border-bottom border-secondary border-4'>
+                            <div>$username</div>
+                            <div>$rating</div>
+                        </div>
+                        <div class='mb-2' style='height:85px;'>$summary</div>
+                        <div class='mb-2 d-flex justify-content-between align-self-end'>
+                            <div>$time_pub</div>
+                            <form action='add_like.php' method='POST'>
+                                <input type='hidden' name='rest_id' value='{$id}'>
+                                <input type='hidden' name='user_id' value='{$r['user_id']}'>
+                                <input type='hidden' name='rating_id' value='{$r['rating_id']}'>
+                                <button type='submit' class='custom-button'>$num_likes<span class='square' title='Like'>&hearts;</span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>";
             }
             echo '</div>';
+
             ?>
         </div>                    
     </body>

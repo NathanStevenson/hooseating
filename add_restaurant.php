@@ -144,7 +144,6 @@
                 <label for="cuisine" class="form-label">Cuisine (select one):</label>
                 <select class="form-control" id="cuisine" name="cuisine">
                 <?php
-                    // PHP code to retrieve options from SQL table and populate dropdown list
                     $query = "SELECT DISTINCT cuisine FROM Restaurant";
                     $statement = $db->prepare($query);
                     $statement->execute();
