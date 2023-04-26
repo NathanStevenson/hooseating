@@ -98,7 +98,7 @@ if (!$already_liked){
 
 $id = $restaurant_id;
 
-header("Location: https://www.cs.virginia.edu/~fk9uu/hooseating/restaurant.php?id=$id");
+header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/restaurant.php?id=$id");
 // header("Location: https://localhost/hooseating/restaurant.php?id=$id");
 
 ?>
