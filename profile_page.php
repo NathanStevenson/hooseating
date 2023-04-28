@@ -111,6 +111,10 @@
 
         div.reviewrating {
             float: right;
+        }        
+        
+        div.reviewsummary {
+            position: center;
         }
 
         nav a.prof{
@@ -161,6 +165,9 @@
                         echo '<h3>Your Top Reviews</h3>';
                         foreach (range(0,$num_reviews-1) as $review){
                             $restaurant = get_restuarant($user_reviews[$review]['restaurant_id'], $active_user);
+                            if (sizeof($restaurant)==0) {
+                                break;
+                            }
                             //apparently in php periods are used to concatenate strings lmao
                             echo '<p>';
                                 echo '<div class="reviewtitle">';
@@ -174,9 +181,11 @@
                             echo '<br>';
                             
                             // summary
-                            echo '<p>';
-                                echo '<p>'.$user_reviews[$review][4].'</p>';
-                            echo '</p>';
+                            echo '<div class="reviewsummary">';
+                                echo '<p>';
+                                    echo '<p>'.$user_reviews[$review][4].'</p>';
+                                echo '</p>';
+                            echo '</div>';
                         }
                     echo '</div>';
                 echo '</div>';
