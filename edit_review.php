@@ -15,20 +15,24 @@
     require("utilities.php");
     require("edit_review_db.php");
 
-    $review_id=$_GET['review_id'];
-    $review_data = get_review($review_id);
+    define('REVIEW_ID', $_GET['review_id']);
+    $review_data = get_review(REVIEW_ID);
     $summary=$review_data[0]['summary'];
+    $user_id=$review_data[0]['user_id'];
+    $rating_id=$review_data[0]['rating_id'];
+    $rest_id=$review_data[0]['restaurant_id'];
+
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(isset($_POST['confirm_edit'])){
-            
-            debug_to_console("id".$review_data[0]['summary']);
-            debug_to_console($_POST['summary']);
-            debug_to_console($_POST['rating']);
-            update_review($review_id, $_POST['summary'], $_POST['rating']);
+            update_review(REVIEW_ID, $_POST['summary'], $_POST['rating']);
             $error_message = "";
-            // header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/");
+            header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/");
         }
-        
+        else if(isset($_POST['delete_review'])){
+            delete_review(REVIEW_ID, $user_id, $rest_id);
+            $error_message = "";
+            header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/");
+        }       
         //Log Out
         if(isset($_POST['logout'])){
             session_destroy();
@@ -56,6 +60,11 @@
             background-color: lightskyblue;
             overflow: hidden;
         }
+
+        nav a.prof{
+            float:right;
+        }
+        
         nav input.prof{
             background: lightskyblue;
             float: right;
@@ -97,8 +106,8 @@
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
             </form>
         </nav>
-        <h2 class='text-center my-3'>Edit Review</h2>
-        <form method="post" class=" shadow w-50 mx-auto border border-secondary border-3 rounded-3 mt-2" style="background-color: white;" action="edit_profile.php">
+        <h2 class='text-center my-3'>Edit Review for: <?php echo get_restaurant_name($review_data[0]['restaurant_id'])['name']?></h2>
+        <form method="post" class=" shadow w-50 mx-auto border border-secondary border-3 rounded-3 mt-2" style="background-color: white;">
             <div class='mx-3 my-4'>
                 <!-- value for inputs will be whatever is currently in the database for them -->
                 <div class="mb-3">
@@ -121,6 +130,11 @@
                     <button type="submit" name="confirm_edit" class="btn btn-primary">Confirm</button>
                     <button style="background-color: red;margin: 10px;" type="submit" name="delete_review" class="btn btn-primary">Delete</button>
                 </div>
+
+                <!-- <form action="edit_review_db.php" method='POST'>
+                    <input type='hidden' name='rec_id' value="{$_GET['review_id']}">
+                    <button type="submit" name="confirm_edit" class="btn btn-primary">Confirm</button>
+                </form> -->
 
                 <div class='text-danger fw-bold mt-3'></div><?php echo $error_message;?></div>
             </div>           
