@@ -21,7 +21,6 @@
     $user_rated_restaurants = get_user_rated_retaurants($active_user);
     $num_rated_restaurants = sizeof($user_rated_restaurants);
     $user_reviews = get_user_reviews($active_user);
-    $num_reviews = sizeof($user_reviews);
 
     $user = get_info_from_username($active_user);
     $user_summary = $user['summary'];
@@ -93,33 +92,6 @@
             text-align: center;
         }
 
-        div.restaurants{
-            border-style: solid;
-            padding: 15px;
-            margin: 30px;
-            background-color: white;
-        }
-
-
-        div.reviews {
-            border-style: solid;
-            padding: 15px;
-            margin: 30px;
-            background-color: white;
-        }
-
-        div.reviewtitle {
-            float: left;
-        }
-
-        div.reviewrating {
-            float: right;
-        }        
-        
-        div.reviewsummary {
-            position: center;
-        }
-
         nav a.prof{
             float:right;
         }
@@ -157,42 +129,54 @@
 
             <?php
                 echo '<div class="d-flex flex-column justify-content-center text-center w-50">';
-                    echo '<div class="restaurants rounded-3 border border-secondary border-3 shadow">';
+                    echo '<div class="rounded-3 border border-secondary border-3 shadow ms-3 me-4 mt-5 mb-4 px-3 py-1" style="background-color: white;">';
                         echo '<h3>Your Favorite Restaurants</h3>';
-                        foreach (range(0,3) as $fav_restaurant){
+                        foreach (range(0,2) as $fav_restaurant){
                             //apparently in php periods are used to concatenate strings lmao
-                            echo '<div>'.$fav_rests[$fav_restaurant]['favorite_restaurant'].'</div>';
+                            $rest_info = get_rest_info($fav_rests[$fav_restaurant]['favorite_restaurant']);
+                            echo '<div class="py-2">'.
+                                    '<div class="d-inline-block fw-bold fs-4">'.$rest_info['name'].'</div>'." ".
+                                    '<div class="d-inline-block"><div class="d-inline-block fw-bold">Address: </div> '.$rest_info['address'].'</div>'." ".
+                                    '<div class="d-inline-block"><div class="d-inline-block fw-bold">Average Rating: </div> '.$rest_info['avg_rating'].'</div>'.
+                                '</div>';
                         }
                     echo '</div>';
                     
-                    echo '<div class="reviews rounded-3 border border-secondary border-3 shadow">';
+                    echo '<div class="rounded-3 border border-secondary border-3 shadow ms-3 me-4 mt-4 mb-2 px-3 py-1" style="background-color: white;">';
                         echo '<h3>Your Top Reviews</h3>';
-                        foreach (range(0,$num_reviews-1) as $review){
+                        // only show top 3 reviews
+                        foreach (range(0,2) as $review){
                             $restaurant = get_restuarant($user_reviews[$review]['restaurant_id'], $active_user);
                             if (sizeof($restaurant)==0) {
                                 break;
                             }
                             //apparently in php periods are used to concatenate strings lmao
-                            echo '<p>';
-                                echo '<div class="reviewtitle">';
-                                    echo '<h5>'.$restaurant[0][0].'  <a class="text-decoration-none fs-3" href="https://www.cs.virginia.edu/~nts7bcj/hooseating/edit_review.php/?review_id='.$user_reviews[$review]['rating_id'].'">&#9881</a>'.'</h5>';
+                            echo '<div class="d-flex justify-content-between my-3 px-2 py-2 border border-2 rounded-3">';
+                                // number of likes
+                                echo '<div class="ms-2">';
+                                    echo '<div style="color:red;">&hearts;</div>';
+                                    echo '<div>'.$user_reviews[$review]['number_of_likes'].'</div>';
                                 echo '</div>';
 
-                                echo '<div class="reviewrating">';
-                                    echo '<h5>'.$user_reviews[$review]['rating'].'</h5>';
+                                // Restaurant name, rating, and summary
+                                echo '<div>';
+                                    echo '<div class="fw-bold">'.$restaurant[0][0].':  '.$user_reviews[$review]['rating'].'</div>';
+                                    echo '<div>'.$user_reviews[$review][4].'</div>';
                                 echo '</div>';
-                            echo '</p>';
-                            echo '<br>';
-                            
-                            // summary
-                            echo '<div class="reviewsummary">';
-                                echo '<p>';
-                                    echo '<p>'.$user_reviews[$review][4].'</p>';
-                                echo '</p>';
+
+                                // Gear to send user to the edit review page
+                                echo '<div>
+                                        <a class="text-decoration-none fs-3" href="https://www.cs.virginia.edu/~nts7bcj/hooseating/edit_review.php/?review_id='.$user_reviews[$review]['rating_id'].'">&#9881</a>
+                                    </div>';
                             echo '</div>';
                         }
                     echo '</div>';
                 echo '</div>';
+                // Name of rest: $restaurant[0][0]
+                // Link to review: <a class="text-decoration-none fs-3" href="https://www.cs.virginia.edu/~nts7bcj/hooseating/edit_review.php/?review_id='.$user_reviews[$review]['rating_id'].'">&#9881</a>'
+                // Rating given: $user_reviews[$review]['rating']
+                // Review summary: $user_reviews[$review][4]
+                // num_likes: $user_reviews[$review]['number_of_likes']
             ?>
         </div>
     </body>

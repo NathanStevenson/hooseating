@@ -145,6 +145,9 @@
             text-decoration: none;
             font-size: 17px;
         }
+        nav a.prof{
+            float:right;
+        }
 
         nav a:hover {
             color: navy;

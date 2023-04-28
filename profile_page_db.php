@@ -15,7 +15,7 @@ function get_user_rated_retaurants($username){
 
 function get_user_reviews($username){
     global $db;
-    $query = "SELECT * from Review JOIN User on User.user_id=Review.user_id where User.name = :username";
+    $query = "SELECT * from Review JOIN User on User.user_id=Review.user_id where User.name=:username ORDER BY number_of_likes DESC LIMIT 3";
     $statement = $db->prepare($query);
     $statement->bindValue(':username', $username);
     $statement->execute();
@@ -55,6 +55,17 @@ function get_fav_rests($user_id){
     $statement->bindValue(':user_id', $user_id);
     $statement->execute();
     $fav_rests = $statement->fetchAll();
+    $statement->closeCursor();
+    return $fav_rests;
+}
+
+function get_rest_info($rest_name){
+    global $db;
+    $query = "SELECT * FROM Restaurant WHERE name=:rest_name;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':rest_name', $rest_name);
+    $statement->execute();
+    $fav_rests = $statement->fetch();
     $statement->closeCursor();
     return $fav_rests;
 }
