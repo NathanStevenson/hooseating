@@ -26,7 +26,7 @@
                     $wrong_credential_msg = "";
                     // Redirect the user to the main page
                     // change the redirect location for local testing with your computing ID
-                    header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/");
+                    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
                     // header("Location: main_page.php/");
                 // User entered the wrong info
                 }else{
@@ -47,16 +47,19 @@
             }
             else{
                 // Stores user in the session variable
-                $_SESSION[$res['name']] = $res['name'];
+                $_SESSION['username'] = $res['name'];
 
                 $username_exists_msg = "";
                 // Code that assigns each user a new unique ID
                 $userid = max_user_id() + 1;
+                // upon registering (3 default values for fav restaurant are uploaded to fav table) and adds to user table
                 add_user($userid, $_POST['name'], $_POST['password']);
-                $active_user = username_taken($_POST['name']);
+                add_default_fav_rests($userid, 'ABC SUSHI');
+                add_default_fav_rests($userid, 'a street');
+                add_default_fav_rests($userid, '1919');
+
                 // Redirect the user to the main page
-                header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/");
-                // header("Location: main_page.php/");
+                header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
             }
         }
     }
@@ -72,7 +75,6 @@
         <meta name="description" content="include some description about your page">     
         <title>Hoos Eating</title> 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
     </head>
 
     <!-- Should align the login box in the middle of the page vertically and mx-auto does horizontally -->

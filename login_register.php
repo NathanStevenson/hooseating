@@ -27,7 +27,7 @@
     // Function that registers a user in our database on login
     function add_user($id, $uname, $pwd){
         global $db;
-        $query = "INSERT INTO User VALUES (:id, :uname, NULL, PASSWORD(:pwd), NULL);";
+        $query = "INSERT INTO User VALUES (:id, :uname, NULL, PASSWORD(:pwd), '');";
         $statement = $db->prepare($query);
         // bind the templates if not an executable
         $statement->bindValue(':id', $id);
@@ -48,9 +48,18 @@
         return $results;
     }
 
-    // given a user allows the BLOB to become an image
-    function blob_to_img($image_data){
-        $mime_type = mime_content_type($image_data);
-        header("Content-Type: $mime_type");
+    function add_default_fav_rests($user_id, $restaurant){
+        global $db;
+        $query = "INSERT INTO User_fav_restaurant VALUES (:user_id, :restaurant);";
+        try{
+            $statement = $db->prepare($query);
+            // bind the templates if not an executable
+            $statement->bindValue(':user_id', $user_id);
+            $statement->bindValue(':restaurant', $restaurant);
+            $statement->execute();
+            $statement->closeCursor();
+        } catch (Exception $e){
+            debug_to_console('here');
+        }
     }
 ?>

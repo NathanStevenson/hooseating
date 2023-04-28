@@ -6,7 +6,7 @@
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
     }else{
         $active_user = $_SESSION['username'];
     }
@@ -16,7 +16,7 @@
 
     function get_user_info($name){
         global $db;
-        $query = "SELECT user_id, profile_photo, summary FROM User WHERE name=:name";
+        $query = "SELECT user_id, summary FROM User WHERE name=:name";
         $statement = $db->prepare($query);
         $statement->bindValue(':name', $name);
         $statement->execute();
@@ -36,14 +36,12 @@
         return $result;
     }
 
-    $allowed_file_types = array('image/jpeg', 'image/png', 'image/jpg');
     $error_message = "";
 
     // getting the original information for the user so that they can edit it
     $user_info = get_user_info($active_user);
     $user_id = $user_info['user_id'];
     $summary = $user_info['summary'];
-    $profile_image = $user_info['profile_image'];
     $fav_rests1 = "";
     $fav_rests2 = "";
     $fav_rests3 = "";
@@ -60,17 +58,17 @@
     }
     
 
-    function update_profile_user($active_user, $profile_photo, $summary){
+    function update_profile_user($active_user, $summary){
         global $db;
-        $query = "UPDATE User SET profile_photo=:profile_photo, summary=:summary WHERE name=:name;"; 
+        $query = "UPDATE User SET summary=:summary WHERE name=:name;"; 
         $statement = $db->prepare($query);
         $statement->bindValue(':name', $active_user);
-        $statement->bindValue(':profile_photo', $profile_photo);
         $statement->bindValue(':summary', $summary);
         $statement->execute();
         $statement->closeCursor();
     }
 
+    // need to think about how to incorporate/edit the user_fav_table so it is actually useful
     function update_fav_rests($active_user, $fav_rest1, $fav_rest2, $fav_rest3){
         global $db;
         $query = "UPDATE User SET fav_rest1=:fav_rest1, fav_rest2=:fav_rest2, fav_rest3=:fav_rest3 WHERE name=:name;"; 
@@ -89,36 +87,21 @@
             $fav_rests1 = $_POST['fav_rests1'];
             $fav_rests2 = $_POST['fav_rests2'];
             $fav_rests3 = $_POST['fav_rests3'];
-            $profile_image = $_POST['file_upload'];
 
-            $file_type = mime_content_type($profile_image);
+            // Update the profile and the saved restaurants
+            update_profile_user($active_user, $summary);
+            // This needs to be revised
+            update_fav_rests($active_user, $fav_rests1, $fav_rests2, $fav_rests3);
 
-            debug_to_console($summary);
-            debug_to_console($fav_rests1);
-            debug_to_console($fav_rests2);
-            debug_to_console($fav_rests3);
-            debug_to_console($file_type);
-
-            if (in_array($file_type, $allowed_file_types)){
-
-                // Update the profile and the saved restaurants
-                update_profile_user($active_user, $profile_image, $summary);
-                update_fav_rests($active_user, $fav_rests1, $fav_rests2, $fav_rests3);
-
-                $error_message = "";
-                header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/");
-            }else{
-                $error_message = "Accepted File Types are JPEG, JPG, or PNG.";
+            $error_message = "";
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/");
             }
         }
         //Log Out
         if(isset($_POST['logout'])){
             session_destroy();
-            header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
         }
-
-    }
-
 ?>
 
 
@@ -131,7 +114,6 @@
         <meta name="description" content="include some description about your page">     
         <title>Hoos Eating</title> 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
 
         <style>
         /* Add some basic styles for the navigation bar */
@@ -172,16 +154,16 @@
     
     <body style="background-color:#DFFFFD">
         <nav>       
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Find a Restaurant</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Find a Restaurant</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
             <form method="POST">
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
             </form>
         </nav>
         <h2 class='text-center my-3'>Update Your Profile</h2>
-        <form method="post" class=" shadow w-50 mx-auto border border-secondary border-3 rounded-3 mt-2" style="background-color: white;" action="edit_profile.php">
+        <form method="post" class="shadow w-50 mx-auto border border-secondary border-3 rounded-3 mt-2" style="background-color: white;" action="edit_profile.php">
             <div class='mx-3 my-4'>
                 <!-- value for inputs will be whatever is currently in the database for them -->
                 <div class="mb-3">
@@ -202,12 +184,6 @@
                 <div class="mb-3">
                     <label for="fav_rests" class="form-label fw-bold">Favorite Restaurants #3</label>
                     <input type="text" class="form-control" id="fav_rests3" name="fav_rests3" value=<?php echo $fav_rests3; ?>>            
-                </div>
-
-                <div class="mb-3">
-                    <div class='mb-3 fw-bold'>Update Your Profile Photo (jpeg, jpg, png)</div>
-                    <label for="file-upload">Choose a file:</label>
-                    <input type="file" id="file-upload" name="file-upload">         
                 </div>
 
                 <div class='w-25 mx-auto'>

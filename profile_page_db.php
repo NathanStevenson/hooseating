@@ -38,6 +38,16 @@ function get_restuarant($rest_id, $username){
     return $results;
 }
 
+function get_info_from_username($name){
+    global $db;
+    $query = "SELECT * FROM User where name=:name";
+    $statement = $db->prepare($query);
+    $statement->bindValue('name', $name);
+    $statement->execute();
+    $user = $statement->fetch();
+    $statement->closeCursor();
+    return $user;
+}
 function get_profile_pic($username){
     global $db;
     $query = "SELECT profile_photo from User WHERE name=:username";
