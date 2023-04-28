@@ -27,7 +27,7 @@
     // Function that registers a user in our database on login
     function add_user($id, $uname, $pwd){
         global $db;
-        $query = "INSERT INTO User VALUES (:id, :uname, NULL, PASSWORD(:pwd));";
+        $query = "INSERT INTO User VALUES (:id, :uname, NULL, PASSWORD(:pwd), '');";
         $statement = $db->prepare($query);
         // bind the templates if not an executable
         $statement->bindValue(':id', $id);

@@ -7,7 +7,7 @@
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
     }else{
         $active_user = $_SESSION['username'];
     }
@@ -23,12 +23,14 @@
     $user_reviews = get_user_reviews($active_user);
     $num_reviews = sizeof($user_reviews);
 
+    $user_info = get_info_from_username($active_user);
+    $user_summary = $user_info['summary'];
 
     //Log Out
     if($_SERVER['REQUEST_METHOD']=='POST'){
         if(isset($_POST['logout'])){
             session_destroy();
-            header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/form.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
         }
     }
 ?>
@@ -118,10 +120,10 @@
     </head>
     <body style="background-color: #DFFFFD">
         <nav>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add Review</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
-            <a href="https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add Review</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
             <form method="POST">
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
             </form>
@@ -130,15 +132,20 @@
         <div class='d-flex pt-3'>
             <div class='w-50 d-flex flex-column text-center'>
                 <div class='my-4'>
+                    <!-- display default profile photo -->
                     <img src="../images/default.png" alt="Profile Picture">
                 </div>
+                
 
                 <div>
                     <div class='mb-3 d-inline-block'><h1><?php echo $_SESSION['username']; ?></h1></div>
                     <div class='d-inline-block '>
-                        <a class='text-decoration-none fs-3' href="https://www.cs.virginia.edu/~ffk9uu/hooseating/edit_profile.php/">&#9881</a>
+                        <a class='text-decoration-none fs-3' href="https://www.cs.virginia.edu/~nts7bcj/hooseating/edit_profile.php/">&#9881</a>
                     </div>
-                    <div class='fw-bold fs-5'>User Summary</div>
+                    <div class='p-4 rounded-3 w-75 mx-auto' style='background-color: lightgray;'>
+                        <div class='fw-bold fs-5'>User Summary</div>
+                        <?php echo $user_summary; ?>
+                    </div>
                 </div>
             </div>
 

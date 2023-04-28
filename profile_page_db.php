@@ -40,5 +40,15 @@ function get_restuarant($rest_id, $username){
     return $results;
 }
 
+function get_info_from_username($name){
+    global $db;
+    $query = "SELECT * FROM User where name=:name";
+    $statement = $db->prepare($query);
+    $statement->bindValue('name', $name);
+    $statement->execute();
+    $user = $statement->fetch();
+    $statement->closeCursor();
+    return $user;
+}
 
 ?>
