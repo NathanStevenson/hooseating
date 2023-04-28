@@ -50,13 +50,13 @@ function get_info_from_username($name){
 }
 function get_fav_rests($user_id){
     global $db;
-    $query = "SELECT * FROM User_fav_restaurants WHERE user_id=:user_id";
+    $query = "SELECT * FROM User_fav_restaurant WHERE user_id=:user_id;";
     $statement = $db->prepare($query);
     $statement->bindValue(':user_id', $user_id);
     $statement->execute();
-    $user = $statement->fetchAll();
+    $fav_rests = $statement->fetchAll();
     $statement->closeCursor();
-    return $user;
+    return $fav_rests;
 }
 
 ?>

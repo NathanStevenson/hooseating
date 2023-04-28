@@ -42,19 +42,19 @@
     $user_info = get_user_info($active_user);
     $user_id = $user_info['user_id'];
     $summary = $user_info['summary'];
-    $fav_rests1 = "";
-    $fav_rests2 = "";
-    $fav_rests3 = "";
+    $old_fav_rests1 = "";
+    $old_fav_rests2 = "";
+    $old_fav_rests3 = "";
 
     $all_fav_rests = get_fav_rests($user_id);
     if(!empty($all_fav_rests[0])){
-        $fav_rests1 = $all_fav_rests[0];
+        $old_fav_rests1 = $all_fav_rests[0]['favorite_restaurant'];
     }
     if(!empty($all_fav_rests[1])){
-        $fav_rests2 = $all_fav_rests[1];
+        $old_fav_rests2 = $all_fav_rests[1]['favorite_restaurant'];
     }
     if(!empty($all_fav_rests[2])){
-        $fav_rests3 = $all_fav_rests[2];
+        $old_fav_rests3 = $all_fav_rests[2]['favorite_restaurant'];
     }
     
 
@@ -69,14 +69,13 @@
     }
 
     // need to think about how to incorporate/edit the user_fav_table so it is actually useful
-    function update_fav_rests($active_user, $fav_rest1, $fav_rest2, $fav_rest3){
+    function update_fav_rest($user_id, $fav_rest, $old_fav_rests){
         global $db;
-        $query = "UPDATE User SET fav_rest1=:fav_rest1, fav_rest2=:fav_rest2, fav_rest3=:fav_rest3 WHERE name=:name;"; 
+        $query = "UPDATE User_fav_restaurant SET favorite_restaurant=:fav_rest WHERE user_id=:user_id AND favorite_restaurant=:old_fav_rests;"; 
         $statement = $db->prepare($query);
-        $statement->bindValue(':name', $active_user);
-        $statement->bindValue(':fav_rest1', $fav_rest1);
-        $statement->bindValue(':fav_rest2', $fav_rest2);
-        $statement->bindValue(':fav_rest3', $fav_rest3);
+        $statement->bindValue(':user_id', $user_id);
+        $statement->bindValue(':fav_rest', $fav_rest);
+        $statement->bindValue(':old_fav_rests', $old_fav_rests);
         $statement->execute();
         $statement->closeCursor();
     }
@@ -90,8 +89,10 @@
 
             // Update the profile and the saved restaurants
             update_profile_user($active_user, $summary);
-            // This needs to be revised
-            update_fav_rests($active_user, $fav_rests1, $fav_rests2, $fav_rests3);
+            // Updates the old valies with the new ones
+            update_fav_rest($user_id, $fav_rests1, $old_fav_rests1);
+            update_fav_rest($user_id, $fav_rests2, $old_fav_rests2);
+            update_fav_rest($user_id, $fav_rests3, $old_fav_rests3);
 
             $error_message = "";
             header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/");
@@ -168,22 +169,22 @@
                 <!-- value for inputs will be whatever is currently in the database for them -->
                 <div class="mb-3">
                     <label for="summary" class="form-label fw-bold">User Summary (max 255)</label>
-                    <input type="text" class="form-control" id="summary" name="summary" value=<?php echo $summary; ?>>
+                    <textarea type="text" class="form-control" id="summary" name="summary"><?php echo $summary; ?></textarea>
                 </div>
 
                 <div class="mb-3">
                     <label for="fav_rests" class="form-label fw-bold">Favorite Restaurants #1</label>
-                    <input type="text" class="form-control" id="fav_rests1" name="fav_rests1" value=<?php echo $fav_rests1; ?>>            
+                    <input type="text" class="form-control" id="fav_rests1" name="fav_rests1" value="<?php echo $old_fav_rests1; ?>">            
                 </div>
 
                 <div class="mb-3">
                     <label for="fav_rests" class="form-label fw-bold">Favorite Restaurants #2</label>
-                    <input type="text" class="form-control" id="fav_rests2" name="fav_rests2" value=<?php echo $fav_rests2; ?>>            
+                    <input type="text" class="form-control" id="fav_rests2" name="fav_rests2" value="<?php echo $old_fav_rests2; ?>">            
                 </div>
 
                 <div class="mb-3">
                     <label for="fav_rests" class="form-label fw-bold">Favorite Restaurants #3</label>
-                    <input type="text" class="form-control" id="fav_rests3" name="fav_rests3" value=<?php echo $fav_rests3; ?>>            
+                    <input type="text" class="form-control" id="fav_rests3" name="fav_rests3" value="<?php echo $old_fav_rests3; ?>">            
                 </div>
 
                 <div class='w-25 mx-auto'>

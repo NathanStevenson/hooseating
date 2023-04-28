@@ -29,7 +29,6 @@
 
     $fav_rests = get_fav_rests($user_id);
 
-
     //Log Out
     if($_SERVER['REQUEST_METHOD']=='POST'){
         if(isset($_POST['logout'])){
@@ -149,7 +148,7 @@
                     <div class='d-inline-block '>
                         <a class='text-decoration-none fs-3' href="https://www.cs.virginia.edu/~nts7bcj/hooseating/edit_profile.php/">&#9881</a>
                     </div>
-                    <div class='p-4 rounded-3 w-75 mx-auto' style='background-color: lightgray;'>
+                    <div class='p-4 rounded-3 w-75 mx-auto border border-secondary border-3 shadow' style='background-color: lightgray;'>
                         <div class='fw-bold fs-5'>User Summary</div>
                         <?php echo $user_summary; ?>
                     </div>
@@ -158,15 +157,15 @@
 
             <?php
                 echo '<div class="d-flex flex-column justify-content-center text-center w-50">';
-                    echo '<div class="restaurants">';
+                    echo '<div class="restaurants rounded-3 border border-secondary border-3 shadow">';
                         echo '<h3>Your Favorite Restaurants</h3>';
-                        foreach (range(0,$num_rated_restaurants-1) as $restaurant){
+                        foreach (range(0,3) as $fav_restaurant){
                             //apparently in php periods are used to concatenate strings lmao
-                            echo '<p>'.$user_rated_restaurants[$restaurant][0].'</p>';
+                            echo '<div>'.$fav_rests[$fav_restaurant]['favorite_restaurant'].'</div>';
                         }
                     echo '</div>';
                     
-                    echo '<div class="reviews">';
+                    echo '<div class="reviews rounded-3 border border-secondary border-3 shadow">';
                         echo '<h3>Your Top Reviews</h3>';
                         foreach (range(0,$num_reviews-1) as $review){
                             $restaurant = get_restuarant($user_reviews[$review]['restaurant_id'], $active_user);

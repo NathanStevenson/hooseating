@@ -26,12 +26,12 @@
         if(isset($_POST['confirm_edit'])){
             update_review(REVIEW_ID, $_POST['summary'], $_POST['rating']);
             $error_message = "";
-            header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/");
         }
         else if(isset($_POST['delete_review'])){
             delete_review(REVIEW_ID, $user_id, $rest_id);
             $error_message = "";
-            header("Location: https://www.cs.virginia.edu/~ffk9uu/hooseating/profile_page.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/");
         }       
         //Log Out
         if(isset($_POST['logout'])){
