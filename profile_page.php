@@ -22,9 +22,9 @@
     $num_rated_restaurants = sizeof($user_rated_restaurants);
     $user_reviews = get_user_reviews($active_user);
     $num_reviews = sizeof($user_reviews);
+    $user = get_info_from_username($active_user);
+    $user_summary = $user['summary'];
 
-    $user_info = get_info_from_username($active_user);
-    $user_summary = $user_info['summary'];
 
     //Log Out
     if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -45,7 +45,6 @@
         <meta name="description" content="include some description about your page">     
         <title>Hoos Eating</title> 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
 
         <style>
         /* Add some basic styles for the navigation bar */
@@ -54,6 +53,7 @@
             overflow: hidden;
         }
 
+       
         nav a {
             float: left;
             color: #f2f2f2;
@@ -132,7 +132,6 @@
         <div class='d-flex pt-3'>
             <div class='w-50 d-flex flex-column text-center'>
                 <div class='my-4'>
-                    <!-- display default profile photo -->
                     <img src="../images/default.png" alt="Profile Picture">
                 </div>
                 
@@ -166,7 +165,7 @@
                             //apparently in php periods are used to concatenate strings lmao
                             echo '<p>';
                                 echo '<div class="reviewtitle">';
-                                    echo '<h5>'.$restaurant[0][0].'</h5>';
+                                    echo '<h5>'.$restaurant[0][0].'  <a class="text-decoration-none fs-3" href="https://www.cs.virginia.edu/~nts7bcj/hooseating/edit_review.php/?review_id='.$user_reviews[$review]['rating_id'].'">&#9881</a>'.'</h5>';
                                 echo '</div>';
 
                                 echo '<div class="reviewrating">';
@@ -174,10 +173,10 @@
                                 echo '</div>';
                             echo '</p>';
                             echo '<br>';
-
-                            // echo '<p>'.$user_reviews[$review]['summary'].', Rating: '.$user_reviews[$review]['rating'].'</p>';
+                            
+                            // summary
                             echo '<p>';
-                                echo '<p>'.$user_reviews[$review]['summary'].'</p>';
+                                echo '<p>'.$user_reviews[$review][4].'</p>';
                             echo '</p>';
                         }
                     echo '</div>';

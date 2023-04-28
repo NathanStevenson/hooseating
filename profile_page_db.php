@@ -15,9 +15,7 @@ function get_user_rated_retaurants($username){
 
 function get_user_reviews($username){
     global $db;
-    $query = "SELECT u.user_id, u.name, r.rating_id, r.restaurant_id, r.summary, r.number_of_likes, r.rating, r.time_published 
-                FROM User u NATURAL JOIN Review r 
-                WHERE u.name = :username";
+    $query = "SELECT * from Review JOIN User on User.user_id=Review.user_id where User.name = :username";
     $statement = $db->prepare($query);
     $statement->bindValue(':username', $username);
     $statement->execute();
@@ -50,5 +48,16 @@ function get_info_from_username($name){
     $statement->closeCursor();
     return $user;
 }
+function get_profile_pic($username){
+    global $db;
+    $query = "SELECT profile_photo from User WHERE name=:username";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':username', $username);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results;
+}
+
 
 ?>
