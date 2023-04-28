@@ -42,22 +42,21 @@ function get_info_from_username($name){
     global $db;
     $query = "SELECT * FROM User where name=:name";
     $statement = $db->prepare($query);
-    $statement->bindValue('name', $name);
+    $statement->bindValue(':name', $name);
     $statement->execute();
     $user = $statement->fetch();
     $statement->closeCursor();
     return $user;
 }
-function get_profile_pic($username){
+function get_fav_rests($user_id){
     global $db;
-    $query = "SELECT profile_photo from User WHERE name=:username";
+    $query = "SELECT * FROM User_fav_restaurants WHERE user_id=:user_id";
     $statement = $db->prepare($query);
-    $statement->bindValue(':username', $username);
+    $statement->bindValue(':user_id', $user_id);
     $statement->execute();
-    $results = $statement->fetchAll();
+    $user = $statement->fetchAll();
     $statement->closeCursor();
-    return $results;
+    return $user;
 }
-
 
 ?>

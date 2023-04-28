@@ -22,8 +22,12 @@
     $num_rated_restaurants = sizeof($user_rated_restaurants);
     $user_reviews = get_user_reviews($active_user);
     $num_reviews = sizeof($user_reviews);
+
     $user = get_info_from_username($active_user);
     $user_summary = $user['summary'];
+    $user_id = $user['user_id'];
+
+    $fav_rests = get_fav_rests($user_id);
 
 
     //Log Out
