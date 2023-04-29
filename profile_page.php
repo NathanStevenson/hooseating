@@ -119,6 +119,7 @@
                     <div class='mb-3 d-inline-block'><h1><?php echo $_SESSION['username']; ?></h1></div>
                     <div class='d-inline-block '>
                         <a class='text-decoration-none fs-3' href="https://www.cs.virginia.edu/~nts7bcj/hooseating/edit_profile.php/">&#9881</a>
+                        <!-- <a class='text-decoration-none fs-3' href="https://localhost/hooseating/edit_profile.php/">&#9881</a> -->
                     </div>
                     <div class='p-4 rounded-3 w-75 mx-auto border border-secondary border-3 shadow' style='background-color: lightgray;'>
                         <div class='fw-bold fs-5'>User Summary</div>

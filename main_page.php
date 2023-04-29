@@ -151,6 +151,7 @@
             <!-- <a href="http://localhost/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a> -->
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <!-- <a href="https://localhost/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a> -->
             <form method="POST">
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
             </form>
