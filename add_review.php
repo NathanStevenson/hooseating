@@ -149,10 +149,10 @@
 
     // search button logic
     else if(isset($_GET['rname']) and strlen($_GET['rname']) > 0){
-        $res = isset($_GET['rname']) ? $_GET['rname'] : '';
+        $res = $_GET['rname'];
         $query = "SELECT * FROM Restaurant WHERE name LIKE :res LIMIT 4";
         $statement = $db->prepare($query);
-        $statement->bindValue(':res', "$res%", PDO::PARAM_STR); //has to do this PDO jank to use LIKE :res
+        $statement->bindValue(':res', "$res%", PDO::PARAM_STR); //has to do this PDO jank to use LIKE :res for good search functionality
         $statement->execute();
         $result = $statement->fetchAll();
         $statement->closeCursor();
