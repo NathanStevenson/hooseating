@@ -6,7 +6,7 @@ $active_user = "";
 // if the user is not logged in then redirect them to the login_page
 if (!isset($_SESSION['username'])) {
     // redirect the user to the login page
-    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php");
     // header("Location: form.php/");
 }else{
     $active_user = $_SESSION['username'];
@@ -16,7 +16,7 @@ if (!isset($_SESSION['username'])) {
 if($_SERVER['REQUEST_METHOD']=='POST'){
     if(isset($_POST['logout'])){
         session_destroy();
-        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php");
     }
 }
 
@@ -243,9 +243,9 @@ function get_rating_id($user, $restaurant_id){
     </head>
     <body style="background-color: #DFFFFD; height: 100vh;">
         <nav>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php" class="fs-4 mt-1 ps-5">Add a Review</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php" class="fs-4 mt-1 ps-5 prof">My Profile</a>
             <form method="POST">
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
             </form>

@@ -11,7 +11,7 @@
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php");
     }else{
         $active_user = $_SESSION['username'];
     }
@@ -75,7 +75,7 @@
         //Log Out
         if(isset($_POST['logout'])){
             session_destroy();
-            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php");
         }
     }
 ?>
@@ -146,9 +146,9 @@
     </head>
     <body style="background-color: #DFFFFD">
         <nav>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php" class="fs-4 mt-1 ps-5">Add a Review</a>
+            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php" class="fs-4 mt-1 ps-5 prof">My Profile</a>
             <form method="POST">
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
             </form>
@@ -201,7 +201,7 @@
             foreach (range(1, 4) as $col) {
                 // the periods are used in php to concat the echo calls
                 echo '<div class="w-25">' . 
-                        '<img src="../images/restaurant_'.$top_rated_rests[$count]['restaurant_id'] % 25 .'.jpg" alt="Profile Picture" class="rounded w-100" style="height: 25vh;">'.
+                        '<img src="images/restaurant_'.$top_rated_rests[$count]['restaurant_id'] % 25 .'.jpg" alt="Restaurant Photo" class="rounded w-100" style="height: 25vh;">'.
                         '<div class="fw-bold">' . $top_rated_rests[$count]['name'] . '</div>' . 
                         '<div>' . $top_rated_rests[$count]['address'] . '</div>' . 
                         '<div class="d-inline">';

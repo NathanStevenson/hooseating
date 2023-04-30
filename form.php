@@ -26,7 +26,7 @@
                     $wrong_credential_msg = "";
                     // Redirect the user to the main page
                     // change the redirect location for local testing with your computing ID
-                    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
+                    header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php");
                     // header("Location: main_page.php/");
                 // User entered the wrong info
                 }else{
@@ -60,7 +60,7 @@
                 add_default_fav_rests($userid, '1919');
 
                 // Redirect the user to the main page
-                header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/");
+                header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php");
             }
         }
     }
