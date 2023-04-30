@@ -6,7 +6,7 @@
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php");
         // header("Location: form.php/");
     }else{
         $active_user = $_SESSION['username'];
@@ -20,8 +20,13 @@
     if($_SERVER['REQUEST_METHOD']=='POST'){
         if(isset($_POST['logout'])){
             session_destroy();
-            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php");
         }
+    }
+
+    // add button
+    if(isset($_POST['radd'])){
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/add_restaurant.php");
     }
 ?>
 
@@ -135,53 +140,45 @@
                 <button class="btn btn-primary d-inline-block" style="height: 2.8em;" type="submit" id="radd" name="radd">Add new Restaurant</button>
             </form>
         </div>
-</body>
-</html>
+        <?php
+        // search button logic
+        if(isset($_GET['rname']) and strlen($_GET['rname']) > 0){
+            $res = $_GET['rname'];
+            $query = "SELECT * FROM Restaurant WHERE name LIKE :res LIMIT 4";
+            $statement = $db->prepare($query);
+            $statement->bindValue(':res', "$res%", PDO::PARAM_STR); //has to do this PDO jank to use LIKE :res for good search functionality
+            $statement->execute();
+            $result = $statement->fetchAll();
+            $statement->closeCursor();
+            
+            if($result){  
+                echo '<div class="w-100 mx-auto mx-5 mt-5 d-flex justify-content-evenly">';
+                // print each returned restaurant name
+                foreach ($result as &$val){
+                    $name = $val['name'];
+                    $id = $val['restaurant_id'];
+                    $address = $val['address'];
+                    $cuisine = $val['cuisine'];
+                    $avg_rating = $val['avg_rating'];
 
-<?php
-
-    // add button
-    if(isset($_POST['radd'])){
-        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/add_restaurant.php");
-        debug_to_console('here');
-    }
-
-    // search button logic
-    else if(isset($_GET['rname']) and strlen($_GET['rname']) > 0){
-        $res = $_GET['rname'];
-        $query = "SELECT * FROM Restaurant WHERE name LIKE :res LIMIT 4";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':res', "$res%", PDO::PARAM_STR); //has to do this PDO jank to use LIKE :res for good search functionality
-        $statement->execute();
-        $result = $statement->fetchAll();
-        $statement->closeCursor();
-        
-        if($result){  
-            echo '<div class="w-100 mx-auto mx-5 mt-3 d-flex justify-content-evenly">';
-            // print each returned restaurant name
-            foreach ($result as &$val){
-                $name = $val['name'];
-                $id = $val['restaurant_id'];
-                $address = $val['address'];
-                $cuisine = $val['cuisine'];
-                $avg_rating = $val['avg_rating'];
-
-                echo"<div class='d-inline-block shadow border border-secondary border-3 rounded-3' style='background-color: white; width: 20%;'>
-                        <div class='p-3'>
-                            <div class='mb-2'><p class='fw-bold d-inline'>Name:</p> $name</div>
-                            <div class='mb-2'><p class='fw-bold d-inline'>Address:</p> $address</div>
-                            <div class='mb-2'><p class='fw-bold d-inline'>Average Rating:</p> $avg_rating</div>
-                            <div class='mb-3'><p class='fw-bold d-inline'>Cuisine:</p> $cuisine</div>
-                            <div class='text-center'>
-                                <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=$id'>Restaurant Details</a>
+                    echo"<div class='d-inline-block shadow border border-secondary border-3 rounded-3' style='background-color: white; width: 20%;'>
+                            <div class='p-3'>
+                                <div class='mb-2'><p class='fw-bold d-inline'>Name:</p> $name</div>
+                                <div class='mb-2'><p class='fw-bold d-inline'>Address:</p> $address</div>
+                                <div class='mb-2'><p class='fw-bold d-inline'>Average Rating:</p> $avg_rating</div>
+                                <div class='mb-3'><p class='fw-bold d-inline'>Cuisine:</p> $cuisine</div>
+                                <div class='text-center'>
+                                    <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=$id'>Restaurant Details</a>
+                                </div>
                             </div>
-                        </div>
-                    </div>";                     
+                        </div>";                     
+                }
+                echo "</div>";   
             }
-            echo "</div>";   
+            else{
+                echo "<h3>Not found; refine search or add new restaurant!</h3>";
+            }
         }
-        else{
-            echo "<h3>Not found; refine search or add new restaurant!</h3>";
-        }
-    }
-?>
+        ?>
+    </body>
+</html>

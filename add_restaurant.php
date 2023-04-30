@@ -6,7 +6,7 @@
     // if the user is not logged in then redirect them to the login_page
     if (!isset($_SESSION['username'])) {
         // redirect the user to the login page
-        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+        header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php");
         // header("Location: form.php/");
     }else{
         $active_user = $_SESSION['username'];
@@ -20,7 +20,59 @@
     if($_SERVER['REQUEST_METHOD']=='POST'){
         if(isset($_POST['logout'])){
             session_destroy();
-            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php");
+        }
+    }
+
+    // Finds first available restauraunt_id (taken from login_register.php)
+    function max_rest_id(){
+        global $db;
+        $query = "SELECT MAX(restaurant_id) FROM Restaurant";
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchColumn();
+        $statement->closeCursor();
+        return $results;
+    }
+
+    // if restaurant already exists via address & name
+    function restaurant_taken($address, $name){
+        global $db;
+        $query = "SELECT * FROM Restaurant WHERE address=:address AND name=:name";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':address', $address);
+        $statement->bindValue(':name', $name);
+        $statement->execute();
+        $result = $statement->fetch();
+        $statement->closeCursor();
+        return $result ;
+    }
+
+    function add_restaurant($address, $name, $cuisine){
+        global $db;
+        $id = max_rest_id()+1;
+        $query = "INSERT INTO Restaurant VALUES (:id, NULL, :cuisine, :address, :name, NULL);";
+        $statement= $db->prepare($query);
+        $statement->bindValue(':id', $id);
+        $statement->bindValue('cuisine', $cuisine);
+        $statement->bindValue('address', $address);
+        $statement->bindValue('name',$name);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
+    if(isset($_POST['rname']) and strlen($_POST['rname']) > 0 and strlen($_POST['address']) > 0){
+        $address = $_POST['address'];
+        $name = $_POST['rname'];
+        $cuisine = $_POST['cuisine'];
+        $taken = restaurant_taken($address, $name);
+        debug_to_console($taken);
+        if(!$taken){
+            add_restaurant($address, $name, $cuisine);
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/");
+        }
+        else {
+            $error_message = "This restaurant already exists!";
         }
     }
 ?>
@@ -156,69 +208,8 @@
                 <div class="w-25 mx-auto">
                     <button type="submit" class="btn btn-primary">Submit Restaurant</button>
                 </div>
+                <?php echo "<div class='text-danger fw-bold text-center mt-2'>".$error_message."</div>"; ?>
             </form>
         </div>
-
     </body>
-
 </html>
-
-<?php
-// Finds first available restauraunt_id (taken from login_register.php)
-    function max_rest_id(){
-        global $db;
-        $query = "SELECT MAX(restaurant_id) FROM Restaurant";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $results = $statement->fetchColumn();
-        $statement->closeCursor();
-        return $results;
-    }
-
-    // if restaurant already exists via address & name
-    function restaurant_taken($address, $name){
-        global $db;
-        $query = "SELECT * FROM Restaurant WHERE address=:address AND name=:name";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':address', $address);
-        $statement->bindValue(':name', $name);
-        $statement->execute();
-        $result = $statement->fetch();
-        $statement->closeCursor();
-        return $result ;
-    }
-
-    function add_restaurant($address, $name, $cuisine){
-        global $db;
-        $id = max_rest_id()+1;
-        $query = "INSERT INTO Restaurant VALUES (:id, NULL, :cuisine, :address, :name, NULL);";
-        $statement= $db->prepare($query);
-        $statement->bindValue(':id', $id);
-        $statement->bindValue('cuisine', $cuisine);
-        $statement->bindValue('address', $address);
-        $statement->bindValue('name',$name);
-        $statement->execute();
-        $statement->closeCursor();
-    }
-
-    if(isset($_POST['rname']) and strlen($_POST['rname']) > 0 and strlen($_POST['address']) > 0){
-
-        $address = $_POST['address'];
-        $name = $_POST['rname'];
-        $cuisine = $_POST['cuisine'];
-
-        $taken = restaurant_taken($address, $name);
-       
-        if(!$taken){
-            add_restaurant($address, $name, $cuisine);
-        }
-        else {
-            echo "restaurant already exsts!";
-
-        }
-
-    }
-
-
-
-?>
