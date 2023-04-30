@@ -143,7 +143,7 @@
     // add button
     if(isset($_POST['radd'])){
         header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/add_restaurant.php");
-        // header("Location: add_restaurant.php/"); // doesn't work when current URL ends in /
+        debug_to_console('here');
     }
 
     // search button logic

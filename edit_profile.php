@@ -223,7 +223,7 @@
                     <input type="text" class="form-control" id="fav_rests3" name="fav_rests3" value="<?php echo $old_fav_rests3; ?>">            
                 </div>
 
-                <div class='w-25 mx-auto'>
+                <div class='w-75 mx-auto d-flex justify-content-evenly '>
                     <button type="submit" name="edit_prof" class="btn btn-primary">Update Profile</button>
                     <button type="submit" name="delete_prof" class="btn btn-primary red-button">Delete Profile </button>
                 </div>
