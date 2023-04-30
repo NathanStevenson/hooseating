@@ -37,6 +37,18 @@
         $statement->closeCursor();
     }
 
+    // function log an unsuccesful login attempt
+    function add_failed_login($uname, $pwd){
+        global $db;
+        $query = "INSERT INTO login_fail_log VALUES (:uname, PASSWORD(:pwd), NULL);";
+        $statement = $db->prepare($query);
+        // bind the templates if not an executable
+        $statement->bindValue(':uname', $uname);
+        $statement->bindValue(':pwd', $pwd);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
     // Finds the first available user_id
     function max_user_id(){
         global $db;

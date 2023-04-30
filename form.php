@@ -30,6 +30,7 @@
                     // header("Location: main_page.php/");
                 // User entered the wrong info
                 }else{
+                    add_failed_login($_POST['name'], $_POST['password']);
                     $wrong_credential_msg = "Invalid Credentials!";
                 }
             }

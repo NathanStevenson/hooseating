@@ -18,6 +18,7 @@
     require("main_page_proc.php");
     require("profile_page_db.php");
 
+    // do smth with user rated rests
     $user_rated_restaurants = get_user_rated_retaurants($active_user);
     $num_rated_restaurants = sizeof($user_rated_restaurants);
     $user_reviews = get_user_reviews($active_user);
@@ -101,7 +102,6 @@
         <nav>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add Review</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
             <form method="POST">
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">

@@ -203,16 +203,16 @@ function add_like($restaurant_id){
         <nav>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/view_reviews.php/" class="fs-4 mt-1 ps-5">View Other Reviews</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
             <form method="POST">
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
             </form>
         </nav>
 
-        <div class='border-bottom border-2' style="height: 50vh;">
+        <div style="height: 45vh;">
             <!-- Background will eventually be the restaurant image on DB -->
-            <div class="d-flex align-items-end border-bottm border-end border-2" style="float: left; width: 65%; height: 50vh;">
+            <div class="d-flex align-items-end border-bottm border-end border-2" style="float: left; width: 65%; height: 50vh; 
+            background-image: url('images/restaurant_<?php echo $id % 25; ?>.jpg'); background-repeat: no-repeat; background-size: 100% 100%">
                 <?php echo "<div style='font-size: 50px; color: white; font-weight: bold; padding-left: 5%;'>" . $restaurant['name'] . "</div>"?>
             </div>
 
@@ -246,12 +246,12 @@ function add_like($restaurant_id){
                 $time_pub = $r['time_published'];
                 $id = $_GET['id'];
                 echo "<div class='shadow border border-secondary border-3 rounded-3' style='background-color: white; width: 20%;'>
-                    <div class='m-3'>
+                    <div class='mx-3 mt-2'>
                         <div class='d-flex justify-content-between mb-2 border-bottom border-secondary border-4'>
                             <div>$username</div>
                             <div>$rating</div>
                         </div>
-                        <div class='mb-2' style='height:85px;'>$summary</div>
+                        <div class='mb-2' style='height:135px;'>$summary</div>
                         <div class='mb-2 d-flex justify-content-between align-self-end'>
                             <div>$time_pub</div>
                             <form action='add_like.php' method='POST'>
