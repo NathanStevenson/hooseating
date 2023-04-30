@@ -194,7 +194,7 @@ if(isset($_POST['s']) and strlen($_POST['summary']) > 0 and strlen($_POST['ratin
             <div class='mx-3 my-4'>
                 <div class="mb-3">
                     <label for="rating" class="form-label fw-bold">Rating (0-10):</label>
-                    <input type="number" class="form-control" id="rating" name="rating" min="0" max="10.1" step="1">
+                    <input type="number" class="form-control" id="rating" name="rating" min="0" max="10" step="1">
                 </div>
 
                 <div class="mb-3">
