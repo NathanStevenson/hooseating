@@ -75,31 +75,44 @@ function write_review($user, $restaurant_id, $summary, $rating  ){
 
 }
 
+//user rated restaurant check
+function already_rated($user, $restaurant_id){
+    global $db;
+    $restaurant_name = get_rest_from_id($restaurant_id);
+    $query = "SELECT * FROM User_rated_restaurant WHERE rated_restaurant=:restaurant_name AND user_id=:user";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':restaurant_name', $restaurant_name);
+    $statement->bindValue(':user', $user);
+    $statement->execute();
+    $res = $statement->fetch();
+    $statement->closeCursor();
+    return $res;
+
+}
+
+function add_to_user_rated_restaurant($user, $restaurant_name){
+    global $db;
+    $restaurant_name = get_rest_from_id($restaurant_name);
+    $query = "INSERT INTO User_rated_restaurant VALUES (:rated_restaurant, :user_id)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':rated_restaurant', $restaurant_name);
+    $statement->bindValue(':user_id', $user);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 if(isset($_POST['s']) and strlen($_POST['summary']) > 0 and strlen($_POST['rating']) > 0){
     $user_id = get_id_from_username($active_user);
-
-    // originally thought we shouldn't let users write 2 reviews but I cant seem to delete reviews in the db for testing purposes.
-    // if(!already_reviewed($user_id)){
-    //     echo "eligible to write a review";
-    //     $restaurant_id = $id;        
-    //     $summary = $_POST['summary'];
-    //     $rating = $_POST['rating'];
-
-    //     write_review($user_id, $restaurant_id, $summary, $rating);
-    //     $url = "restaurant.php?id=".$restaurant_id;
-    //     header($url);
-    
-    // }else{
-    //     echo "you've already left a review. soon we'll add a feature to edit reviews. wow";
-    // }
 
     $restaurant_id = $id;        
     $summary = $_POST['summary'];
     $rating = $_POST['rating'];
-
+    
+    add_to_user_rated_restaurant($user_id, $restaurant_id);
     write_review($user_id, $restaurant_id, $summary, $rating);
     // Redirect back to the restaurant main page
     header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=".$id);
+    // header("Location: https://localhost/hooseating/restaurant.php?id=".$id);
 }
 
 ?>
@@ -181,7 +194,7 @@ if(isset($_POST['s']) and strlen($_POST['summary']) > 0 and strlen($_POST['ratin
             <div class='mx-3 my-4'>
                 <div class="mb-3">
                     <label for="rating" class="form-label fw-bold">Rating (0-10):</label>
-                    <input type="number" class="form-control" id="rating" name="rating" min="0" max="10.1" step="0.1">
+                    <input type="number" class="form-control" id="rating" name="rating" min="0" max="10.1" step="1">
                 </div>
 
                 <div class="mb-3">

@@ -26,12 +26,14 @@
         if(isset($_POST['confirm_edit'])){
             update_review(REVIEW_ID, $_POST['summary'], $_POST['rating']);
             $error_message = "";
-            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=".$rest_id);
+            // header("Location: https://localhost/hooseating/restaurant.php?id=".$rest_id);
         }
         else if(isset($_POST['delete_review'])){
             delete_review(REVIEW_ID, $user_id, $rest_id);
             $error_message = "";
-            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/restaurant.php?id=".$rest_id);
+            // header("Location: https://localhost/hooseating/restaurant.php?id=".$rest_id);
         }       
         //Log Out
         if(isset($_POST['logout'])){
@@ -135,7 +137,7 @@
                     <button type="submit" name="confirm_edit" class="btn btn-primary">Confirm</button>
                 </form> -->
 
-                <div class='text-danger fw-bold mt-3'></div><?php echo $error_message;?></div>
+
             </div>           
         </form>
     </body>

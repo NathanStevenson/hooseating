@@ -125,6 +125,10 @@
                         <div class='fw-bold fs-5'>User Summary</div>
                         <?php echo $user_summary; ?>
                     </div>
+                    <div class='p-4 rounded-3 w-75 mx-auto border border-secondary border-3 shadow' style='background-color: lightgray;'>
+                        <div class='fw-bold fs-5'>Total Restaurants Reviewed:</div>
+                        <?php echo count_URR($user_id); ?>
+                    </div>
                 </div>
             </div>
 
