@@ -70,4 +70,15 @@ function get_rest_info($rest_name){
     return $fav_rests;
 }
 
+function count_URR($user_id){
+    global $db;
+    $query = "SELECT COUNT(*) FROM User_rated_restaurant WHERE user_id=:user_id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':user_id', $user_id);
+    $statement->execute();
+    $res = $statement->fetchColumn();
+    $statement->closeCursor();
+    return $res;
+}
+
 ?>
