@@ -125,16 +125,13 @@
                         <div class='fw-bold fs-5'>User Summary</div>
                         <?php echo $user_summary; ?>
                     </div>
-                    <div class='p-4 rounded-3 w-75 mx-auto border border-secondary border-3 shadow' style='background-color: lightgray;'>
-                        <div class='fw-bold fs-5'>Total Restaurants Reviewed:</div>
-                        <?php echo count_URR($user_id); ?>
-                    </div>
                 </div>
             </div>
 
             <?php
                 echo '<div class="d-flex flex-column justify-content-center text-center w-50">';
-                    echo '<div class="rounded-3 border border-secondary border-3 shadow ms-3 me-4 mt-5 mb-4 px-3 py-1" style="background-color: white;">';
+                    echo "<div class='fw-bold fs-5 align-self-start ms-4 mt-4'>Total Restaurants Reviewed: ".count_URR($user_id)."</div>";
+                    echo '<div class="rounded-3 border border-secondary border-3 shadow ms-3 me-4 mt-3 mb-4 px-3 py-1" style="background-color: white;">';
                         echo '<h3>Your Favorite Restaurants</h3>';
                         foreach (range(0,2) as $fav_restaurant){
                             //apparently in php periods are used to concatenate strings lmao

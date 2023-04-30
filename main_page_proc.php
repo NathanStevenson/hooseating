@@ -4,7 +4,7 @@ function display_restaurants($filter_type, $restaurant_type){
     // ALL RESTS
     // Top_Rated_Rests
     if($filter_type == "best" && $restaurant_type == "all"){
-        $query = "SELECT * FROM Restaurant ORDER BY avg_rating DESC LIMIT 12";
+        $query = "SELECT * FROM Restaurant ORDER BY avg_rating DESC LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -14,7 +14,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Worst_Rated_rests
     if($filter_type == "worst" && $restaurant_type == "all"){
-        $query = "SELECT * FROM Restaurant ORDER BY avg_rating LIMIT 12";
+        $query = "SELECT * FROM Restaurant ORDER BY avg_rating LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -24,7 +24,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Alphabetically
     if($filter_type == "alphabetically" && $restaurant_type == "all"){
-        $query = "SELECT * FROM Restaurant ORDER BY name LIMIT 12";
+        $query = "SELECT * FROM Restaurant ORDER BY name LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -34,7 +34,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // BARS
     if($filter_type == "best" && $restaurant_type == "bars"){
-        $query = "SELECT * FROM Bar NATURAL JOIN Restaurant ORDER BY avg_rating DESC LIMIT 12";
+        $query = "SELECT * FROM Bar NATURAL JOIN Restaurant ORDER BY avg_rating DESC LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -44,7 +44,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Worst_Rated_rests
     if($filter_type == "worst" && $restaurant_type == "bars"){
-        $query = "SELECT * FROM Bar NATURAL JOIN Restaurant ORDER BY avg_rating LIMIT 12";
+        $query = "SELECT * FROM Bar NATURAL JOIN Restaurant ORDER BY avg_rating LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -54,7 +54,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Alphabetically
     if($filter_type == "alphabetically" && $restaurant_type == "bars"){
-        $query = "SELECT * FROM Bar NATURAL JOIN Restaurant ORDER BY name LIMIT 12";
+        $query = "SELECT * FROM Bar NATURAL JOIN Restaurant ORDER BY name LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -64,7 +64,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Dine-In
     if($filter_type == "best" && $restaurant_type == "dine-in"){
-        $query = "SELECT * FROM Dine_In NATURAL JOIN Restaurant ORDER BY avg_rating DESC LIMIT 12";
+        $query = "SELECT * FROM Dine_In NATURAL JOIN Restaurant ORDER BY avg_rating DESC LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -74,7 +74,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Worst_Rated_rests
     if($filter_type == "worst" && $restaurant_type == "dine-in"){
-        $query = "SELECT * FROM Dine_In NATURAL JOIN Restaurant ORDER BY avg_rating LIMIT 12";
+        $query = "SELECT * FROM Dine_In NATURAL JOIN Restaurant ORDER BY avg_rating LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -84,7 +84,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Alphabetically
     if($filter_type == "alphabetically" && $restaurant_type == "dine-in"){
-        $query = "SELECT * FROM Dine_In NATURAL JOIN Restaurant ORDER BY name LIMIT 12";
+        $query = "SELECT * FROM Dine_In NATURAL JOIN Restaurant ORDER BY name LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -94,7 +94,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Fast Food
     if($filter_type == "best" && $restaurant_type == "fast-food"){
-        $query = "SELECT * FROM Fast_Food NATURAL JOIN Restaurant ORDER BY avg_rating DESC LIMIT 12";
+        $query = "SELECT * FROM Fast_Food NATURAL JOIN Restaurant ORDER BY avg_rating DESC LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -104,7 +104,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Worst_Rated_rests
     if($filter_type == "worst" && $restaurant_type == "fast-food"){
-        $query = "SELECT * FROM Fast_Food NATURAL JOIN Restaurant ORDER BY avg_rating LIMIT 12";
+        $query = "SELECT * FROM Fast_Food NATURAL JOIN Restaurant ORDER BY avg_rating LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 
@@ -114,7 +114,7 @@ function display_restaurants($filter_type, $restaurant_type){
 
     // Alphabetically
     if($filter_type == "alphabetically" && $restaurant_type == "fast-food"){
-        $query = "SELECT * FROM Fast_Food NATURAL JOIN Restaurant ORDER BY name LIMIT 12";
+        $query = "SELECT * FROM Fast_Food NATURAL JOIN Restaurant ORDER BY name LIMIT 8";
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll(); 

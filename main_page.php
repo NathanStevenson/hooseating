@@ -148,9 +148,7 @@
         <nav>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/main_page.php/" class="fs-3 ps-5 fw-bold">Hoos Eating</a>
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a>
-            <!-- <a href="https://localhost/hooseating/add_review.php/" class="fs-4 mt-1 ps-5">Add a Review</a> -->
             <a href="https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a>
-            <!-- <a href="https://localhost/hooseating/profile_page.php/" class="fs-4 mt-1 ps-5 prof">My Profile</a> -->
             <form method="POST">
                 <input type="submit" value="Log Out" name="logout" class="fs-4 mt-1 ps-5 prof" id="logout">
             </form>
@@ -197,14 +195,30 @@
         $count = 0;
         echo '<div class="container mt-5">';
         // Outer loop for rows
-        foreach (range(1, 3) as $row) {
-            echo '<div class="row">';
+        foreach (range(1, 2) as $row) {
+            echo '<div class="row mb-2">';
             // Inner loop for columns
             foreach (range(1, 4) as $col) {
                 // the periods are used in php to concat the echo calls
-                echo '<div class="col border border-secondary border-2 rounded-3 m-3" style="background-color: white">' . '<div>' . $top_rated_rests[$count]['name'] . '</div>' . 
-                              '<div>' . $top_rated_rests[$count]['address'] . '</div>' . 
-                              '<div>' . "(" . $top_rated_rests[$count]['cuisine'] . "): " .$top_rated_rests[$count]['avg_rating'] .'</div>' .'</div>';
+                echo '<div class="w-25">' . 
+                        '<img src="../images/restaurant_'.$top_rated_rests[$count]['restaurant_id'] % 25 .'.jpg" alt="Profile Picture" class="rounded w-100" style="height: 25vh;">'.
+                        '<div class="fw-bold">' . $top_rated_rests[$count]['name'] . '</div>' . 
+                        '<div>' . $top_rated_rests[$count]['address'] . '</div>' . 
+                        '<div class="d-inline">';
+                        if($_SESSION['restaurants'] == 'all'){
+                            echo '<div class="d-inline fw-bold">Cuisine: </div>' . $top_rated_rests[$count]['cuisine'];
+                        }
+                        if($_SESSION['restaurants'] == 'bars'){
+                            echo '<div class="d-inline fw-bold">Theme: </div>' . $top_rated_rests[$count]['theme'];
+                        } 
+                        if($_SESSION['restaurants'] == 'dine-in'){
+                            echo '<div class="d-inline fw-bold">Formality: </div>' . $top_rated_rests[$count]['formality'];
+                        } 
+                        if($_SESSION['restaurants'] == 'fast-food'){
+                            echo '<div class="d-inline fw-bold">Wait Time: </div>' . $top_rated_rests[$count]['wait_time'] . ' mins';
+                        } 
+                        echo '<div class="d-inline fw-bold"> Avg Rating: </div>'.$top_rated_rests[$count]['avg_rating'] .'</div>' 
+                    .'</div>';
                 $count++;
             }
             echo '</div>';
