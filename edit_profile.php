@@ -14,6 +14,17 @@
     require("connect-db.php");
     require("utilities.php");
 
+    // function to delete a profile. Looks really simple because all of the logic involved in deleteing
+    // primary key dependencies is done with triggers on the server. 
+    function delete_profile($user_id){
+        global $db;
+        $query = "DELETE FROM User WHERE user_id=:user_id";
+        $statement = $db->prepare($query);
+        $statement->bindValue('user_id', $user_id);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
     function get_user_info($name){
         global $db;
         $query = "SELECT user_id, summary FROM User WHERE name=:name";
@@ -98,6 +109,16 @@
             header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/profile_page.php/");
             }
         }
+
+        if(isset($_POST['delete_prof'])){
+            
+            delete_profile($user_id);
+            session_destroy();
+            // header("Location: https:localhost/hooseating/form.php/");
+            header("Location: https://www.cs.virginia.edu/~nts7bcj/hooseating/form.php/");
+        }
+
+
         //Log Out
         if(isset($_POST['logout'])){
             session_destroy();
@@ -153,6 +174,19 @@
             color: navy;
             text-decoration: underline;
         }
+
+        .red-button {
+            background-color: red;
+            color: white;
+            border: 1px solid red;
+            
+        }
+
+        .red-button:hover {
+            background-color: red;
+            border: 1px solid red;
+        }
+
         </style>
     </head>
     
@@ -191,6 +225,7 @@
 
                 <div class='w-25 mx-auto'>
                     <button type="submit" name="edit_prof" class="btn btn-primary">Update Profile</button>
+                    <button type="submit" name="delete_prof" class="btn btn-primary red-button">Delete Profile </button>
                 </div>
 
                 <div class='text-danger fw-bold mt-3'></div><?php echo $error_message;?></div>
