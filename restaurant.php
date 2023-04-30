@@ -53,19 +53,6 @@ function get_rest_reviews($id){
 $restaurant = get_rest($id);
 $reviews = get_rest_reviews($id);
 
-// to stop someone from spamming reviews: allow them to only have 1 review
-// per restaurant. TODO: edit review functionality
-function already_reviewed($user_id){
-    global $db;
-    $query = "SELECT * FROM Review where user_id=:user_id";
-    $statement = $db->prepare($query);
-    $statement->bindValue('user_id', $user_id);
-    $statement->execute();
-    $result = $statement->fetch();
-    $statement->closeCursor();
-    return $result;
-}
-
 function get_username_from_id($id){
     global $db;
     $query = "SELECT name FROM User where user_id=:id";
@@ -77,8 +64,63 @@ function get_username_from_id($id){
     return $user_name['name'];
 }
 
-function add_like($restaurant_id){
-    
+function already_rated($user, $restaurant_id){
+    global $db;
+    $restaurant_name = get_rest_from_id($restaurant_id);
+    $query = "SELECT * FROM User_rated_restaurant WHERE rated_restaurant=:restaurant_name AND user_id=:user";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':restaurant_name', $restaurant_name);
+    $statement->bindValue(':user', $user);
+    $statement->execute();
+    $res = $statement->fetch();
+    $statement->closeCursor();
+    return $res;
+
+}
+
+function add_to_user_rated_restaurant($user, $restaurant_id){
+    global $db;
+    $restaurant_name = get_rest_from_id($restaurant_id);
+    $query = "INSERT INTO User_rated_restaurant VALUES (:rated_restaurant, :user_id)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':rated_restaurant', $restaurant_name);
+    $statement->bindValue(':user_id', $user);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function get_rest_from_id($id){
+    global $db;
+    $query = "SELECT name FROM Restaurant where restaurant_id=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue('id', $id);
+    $statement->execute();
+    $rest_name = $statement->fetch();
+    $statement->closeCursor();
+    return $rest_name['name'];
+}
+function get_id_from_username($name){
+    global $db;
+    $query = "SELECT user_id FROM User where name=:name";
+    $statement = $db->prepare($query);
+    $statement->bindValue('name', $name);
+    $statement->execute();
+    $user_id = $statement->fetch();
+    $statement->closeCursor();
+    return $user_id['user_id'];
+}
+
+function get_rating_id($user, $restaurant_id){
+    global $db;
+    $query = "SELECT rating_id FROM Review WHERE restaurant_id=:restaurant_id AND user_id=:user";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':restaurant_id', $restaurant_id);
+    $statement->bindValue(':user', $user);
+    $statement->execute();
+    $res = $statement->fetch();
+    $statement->closeCursor();
+    return $res;
+
 }
 
 ?>
@@ -228,7 +270,24 @@ function add_like($restaurant_id){
                 <div class='text-center mb-4'><?php echo $restaurant['cuisine']; ?></div>
 
                 <div class='text-center'>
-                    <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/submit_review.php?id=<?php echo $id;?>'>Leave a Review</a>
+                    <!-- <a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/submit_review.php?id=<?php echo $id;?>'>Leave a Review</a> -->
+                    <?php
+                    $user_id = get_id_from_username($active_user);
+                    $restaurant_id = $_GET['id'];
+                    $rating_id = -1;
+                    if (already_rated($user_id, $restaurant_id)){
+                        $rating_id = get_rating_id($user_id, $restaurant_id)['rating_id'];
+                    }
+                    // id for second link needs to be the one for the respective review fuck
+                    if (!already_rated($user_id, $restaurant_id)){
+                        // echo "<a class='button' href='https://localhost/hooseating/submit_review.php?id=" . $id . "'>Leave a Review</a>";
+                        echo "<a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/submit_review.php?id=" . $id . "'>Leave a Review</a>";
+
+                    } else {
+                        echo "<a class='button' href='https://www.cs.virginia.edu/~nts7bcj/hooseating/edit_review_from_rest.php/?review_id=" . $rating_id . "'>Edit Review</a>";
+                        // echo "<a class='button' href='https://localhost/hooseating/edit_review_from_rest.php/?review_id=" . $rating_id . "'>Edit Review</a>";
+                    }
+                    ?>
                 </div>
             </div>
         </div>
