@@ -296,6 +296,7 @@ function get_rating_id($user, $restaurant_id){
             <div class="fw-bold fs-3 mb-3 ms-3">Most Recent Reviews</div>
 
             <?php
+            $active_user_id = get_id_from_username($active_user);
             echo '<div class="w-100 mx-auto mx-5 mt-3 d-flex justify-content-evenly">';
             foreach ($reviews as $r){
                 $username = get_username_from_id($r['user_id']);
@@ -315,7 +316,7 @@ function get_rating_id($user, $restaurant_id){
                             <div>$time_pub</div>
                             <form action='add_like.php' method='POST'>
                                 <input type='hidden' name='rest_id' value='{$id}'>
-                                <input type='hidden' name='user_id' value='{$r['user_id']}'>
+                                <input type='hidden' name='user_id' value='{$active_user_id}'>
                                 <input type='hidden' name='rating_id' value='{$r['rating_id']}'>
                                 <button type='submit' class='custom-button'>$num_likes<span class='square' title='Like'>&hearts;</span></button>
                             </form>
