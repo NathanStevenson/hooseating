@@ -113,7 +113,7 @@
                 <!-- value for inputs will be whatever is currently in the database for them -->
                 <div class="mb-3">
                     <label for="summary" class="form-label fw-bold">Rating</label>
-                    <input type="text" class="form-control" id="rating" name="rating" value=<?php echo $review_data[0]['rating']; ?>>
+                    <input type="text" class="form-control" id="rating" name="rating" min="0" max="10" step="0.01" value=<?php echo $review_data[0]['rating']; ?>>
                 </div>
 
                 <div class="mb-3">
