@@ -47,5 +47,11 @@ function delete_review($change_review, $user, $rest){
     $statement->bindValue(':rest', $rest);
     $statement->execute();
     $statement->closeCursor();
+    
+    $query = "DELETE FROM Likes WHERE rating_id=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $change_review);
+    $statement->execute();
+    $statement->closeCursor();
 }
 ?>
